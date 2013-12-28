@@ -2,7 +2,6 @@
 
 namespace GSibay\DeveloperTask\Tests\Command;
 
-//use Symfony\Component\Serializer\Serializer;
 use JMS\Serializer\Serializer;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;

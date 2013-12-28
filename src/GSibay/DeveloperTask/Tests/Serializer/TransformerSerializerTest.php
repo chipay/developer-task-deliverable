@@ -11,9 +11,13 @@ class TransformerSerializerTest extends \PHPUnit_Framework_TestCase
 {
     public function testSerializationAndDeserialization_simpleObject()
     {
+        $this->markTestSkipped('must be revisited.');
+        /*
+            TODO: IGNORE THIS TEST UNTIL I FIGURE OUT THE problem with closures
+    
         $serializer = SerializerBuilder::create()->setDebug(true)->build();
         
-        /* TODO: IGNORE THIS TEST UNTIL I FIGURE OUT THE CLOSURE THING
+        
         // create a no operation transformer
         $nopClosure = function($anObject) { return $anObjet; };
         $nopTrasformer = new ClosureTransformer($nopClosure);
@@ -25,8 +29,7 @@ class TransformerSerializerTest extends \PHPUnit_Framework_TestCase
         $deserializedObject = $transformerSerializer->deserialize($serializedObject, 'array<\DateTime>', 'xml');
         
         $this->assertEquals($objectToSerialize, $deserializedObject);
-         */
-        
+     */   
     }
     
 }

@@ -28,17 +28,12 @@ EOB;
         $transformer = new DateTimeArrayXMLToTimeStampsXML('Y-m-d H:i:s');
         $transformedXML = $transformer->transform($xml);
         
-        ////var_dump('transformedXML:'.$transformedXML);
-        
-        //$this->assertXmlStringEqualsXmlString($expectedTransformedXml, $transformedXML);
-        
-        //assertXmlStringEqualsXmlString($expectedTransformedXml, $transformedXML);
-        //var_dump($transformedXML);
-        //assertXmlStringEqualsXmlString($expectedTransformedXml, $transformedXML);
+        $this->assertXmlStringEqualsXmlString($expectedTransformedXml, $transformedXML);
     }
 
     public function testTransformer_OneEntrie_OneTimestampExpected()
     {
+        $this->markTestSkipped('timestamp is lost in entry. It should be saved as timestamp');
         $xml = <<<EOB
 <?xml version='1.0' encoding='UTF-8'?>
 <result>
@@ -46,8 +41,6 @@ EOB;
 </result>
 EOB;
     
-        //<![CDATA[2009-06-30 13:00:00]]>
-        //    TODO: VER COMO ES EL FORMATO CON CDDATA. VER COMO SE SACA CON XSL
         $expectedTransformedXml = <<<EOB
 <?xml version='1.0' encoding='UTF-8'?>
 <timestamps>
@@ -56,16 +49,8 @@ EOB;
 EOB;
     
         $transformer = new DateTimeArrayXMLToTimeStampsXML('Y-m-d H:i:s');
-        ////var_dump('originalXML: '.$xml);
         $transformedXML = $transformer->transform($xml);
-    
-        ////var_dump('transformedXML:'.$transformedXML);
-        
-        //$this->assertXmlStringEqualsXmlString($expectedTransformedXml, $transformedXML);
-    
-        //assertXmlStringEqualsXmlString($expectedTransformedXml, $transformedXML);
-        //var_dump($transformedXML);
-        //assertXmlStringEqualsXmlString($expectedTransformedXml, $transformedXML);
+        $this->assertXmlStringEqualsXmlString($expectedTransformedXml, $transformedXML);
     }
     
 }

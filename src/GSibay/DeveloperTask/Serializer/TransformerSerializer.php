@@ -13,7 +13,7 @@ use GSibay\DeveloperTask\Transformer\Transformer;
  * @author gsibay
  *
  */
-class TransformerSerializer 
+class TransformerSerializer implements SerializerInterface
 {
     /**
      *

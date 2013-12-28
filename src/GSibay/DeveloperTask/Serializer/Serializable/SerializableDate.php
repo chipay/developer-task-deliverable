@@ -9,9 +9,9 @@
 namespace GSibay\DeveloperTask\Serializer\Serializable;
 
 use JMS\Serializer\Annotation as JMS;
-use JMS\Serializer\Annotation\Type;
 
 use \DateTime as DateTime;
+use \DateTimeZone as DateTimeZone;
 
 /**
  * @JMS\AccessorOrder("custom", custom = {"date", "getText"})

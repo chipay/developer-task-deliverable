@@ -2,11 +2,9 @@
 
 namespace GSibay\DeveloperTask\Tests\Serializer;
 
-use JMS\Serializer\SerializerBuilder;
-use GSibay\DeveloperTask\Serializer\TransformerSerializer;
-use GSibay\DeveloperTask\Transformer\ClosureTransformer;
-use GSibay\DeveloperTask\Serializer\SerializableTimeDates;
+use GSibay\DeveloperTask\Serializer\Serializable\SerializableTimeDates;
 use GSibay\DeveloperTask\Serializer\Serializable\SerializableDate;
+use JMS\Serializer\SerializerBuilder;
 use \DateTime as DateTime;
 use \DateTimeZone as DateTimeZone;
 
@@ -18,7 +16,6 @@ class SerializableDatesTest extends \PHPUnit_Framework_TestCase
      */
     public static function setUpBeforeClass()
     {
-        var_dump(__DIR__."/../../../../../vendor/jms/serializer/src");
         // Bootstrap the JMS custom annotations for Object mapping (serializatin/deserialization)
         \Doctrine\Common\Annotations\AnnotationRegistry::registerAutoloadNamespace(
                 'JMS\Serializer\Annotation',
@@ -43,21 +40,22 @@ EOB;
     
     public function testSerializableDates_OneDate_OneRow()
     {
-        $timeZone = new DateTimeZone('GMT');
-        $dates = array(new DateTime('2009-06-30 13:00:00', $timeZone));
-        
-        $serializableDate = new SerializableDate(new DateTime('2009-06-30 13:00:00', $timeZone));
+        $date = new DateTime('2009-06-30 13:00:00');
+        $serializableDate = new SerializableDate($date);
         $serializableDates = new SerializableTimeDates(array($serializableDate));
+        
         $serialized = SerializerBuilder::create()->build()->serialize($serializableDates, 'xml');;
         
+        $time = $date->getTimestamp(); 
+        $text = $date->format('Y-m-d H:i:s');
         $expectedTransformedXml = <<<EOB
 <?xml version='1.0' encoding='UTF-8'?>
 <timestamps>
-    <timestamp time='1246406400' text='2009-06-30 13:00:00' />
+    <timestamp time='$time' text='$text' />
 </timestamps>
 EOB;
         
         $this->assertXmlStringEqualsXmlString($expectedTransformedXml, $serialized);
     }
-    
+  
 }
