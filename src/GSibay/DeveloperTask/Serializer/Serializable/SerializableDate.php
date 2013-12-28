@@ -14,6 +14,7 @@ use JMS\Serializer\Annotation\Type;
 use \DateTime as DateTime;
 
 /**
+ * @JMS\AccessorOrder("custom", custom = {"date", "getText"})
  * @author german
  * 
  */ 
@@ -23,27 +24,26 @@ class SerializableDate
      * 
      * @var SerializableTimeDates
      */
-    private $father;
+    //private $father;
     
     /**
      * @JMS\XmlAttribute 
-     * @JMS\Type("DateTime<'Y-m-d H:i:s'>")
-     * @JMS\SerializedName("text")
+     * @JMS\Type("DateTime<'U'>")
+     * @JMS\SerializedName("time")
      * @var \DateTime
      */
     private $date;
     
     /**
-     * @JMS\Type("DateTime<'U','PST'>")
+     * @JMS\Type("DateTime<'Y-m-d H:i:s'>")
      * @JMS\XmlAttribute
-     * @JMS\SerializedName("time")
+     * @JMS\SerializedName("text")
      * @JMS\VirtualProperty
      */
-    public function getTime()
+    public function getText()
     {
-        return $this->msg;//->getTimestamp();
+        return $this->date;
     }
-
     
     /**
      * 

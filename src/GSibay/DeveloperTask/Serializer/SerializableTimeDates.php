@@ -8,27 +8,32 @@
 
 namespace GSibay\DeveloperTask\Serializer;
 
+use JMS\Serializer\Annotation as JMS;
 use \DateTime as DateTime;
 
 /**
- * @author german
+ * 
+ * @JMS\XmlRoot("timestamps") 
+ * 
+ * @author gsibay
  */ 
 class SerializableTimeDates
 {
 
     /**
      * 
-     * @var DateTime[]
+     * @JMS\XmlList(inline = true, entry = "timestamp")
+     * @var SerializableDate[]
      */
     private $dates;
      
     /**
      * 
-     * @param DateTime[] $dates
+     * @param SerializableDate[] $serializableDates
      */
-    public function __construct(array $dates)
+    public function __construct($serializableDates)
     {
-        $this->dates = $dates; 
+        $this->dates = $serializableDates; 
     }
     
 }

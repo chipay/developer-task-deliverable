@@ -23,12 +23,12 @@ EOB;
 </timestamps>
 EOB;
 
-        var_dump('originalXML: '.$xml);
+        ////var_dump('originalXML: '.$xml);
         
         $transformer = new DateTimeArrayXMLToTimeStampsXML('Y-m-d H:i:s');
         $transformedXML = $transformer->transform($xml);
         
-        var_dump('transformedXML:'.$transformedXML);
+        ////var_dump('transformedXML:'.$transformedXML);
         
         //$this->assertXmlStringEqualsXmlString($expectedTransformedXml, $transformedXML);
         
@@ -56,10 +56,11 @@ EOB;
 EOB;
     
         $transformer = new DateTimeArrayXMLToTimeStampsXML('Y-m-d H:i:s');
-        var_dump('originalXML: '.$xml);
+        ////var_dump('originalXML: '.$xml);
         $transformedXML = $transformer->transform($xml);
     
-        var_dump('transformedXML:'.$transformedXML);
+        ////var_dump('transformedXML:'.$transformedXML);
+        
         //$this->assertXmlStringEqualsXmlString($expectedTransformedXml, $transformedXML);
     
         //assertXmlStringEqualsXmlString($expectedTransformedXml, $transformedXML);
