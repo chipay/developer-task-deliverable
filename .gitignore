@@ -1,0 +1,12 @@
+*~
+# Eclipse project files
+.buildpath
+.project
+.settings/org.eclipse.php.core.prefs
+
+# Symfony and other vendors directories
+vendor/*
+
+# Configuration files
+app/phpunit.xml
+
