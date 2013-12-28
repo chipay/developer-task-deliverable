@@ -25,13 +25,13 @@ require_once __DIR__ . '/../vendor/autoload.php';
 $console = new Application("Date Utils Application", '1.0');
 
 $dateGeneratorService = new DefaultDateGeneratorService();
-//TODO esto sacarlo con dependency injection
+//TODO add dependency injection
 
 $serializer = SerializerBuilder::create()->build();
 
 $console ->add(new GenerateDatesCommand($dateGeneratorService, $serializer));
 $console ->add(new SortDatesExcludingPrimeYearsCommand());
-//$console->run();
-$command = $console->find(GenerateDatesCommand::COMMAND_NAME);
-$commandTester =  new CommandTester($command);
-$commandTester->execute(array('command' => $command->getName()));
+$console->run();
+//$command = $console->find(GenerateDatesCommand::COMMAND_NAME);
+//$commandTester =  new CommandTester($command);
+//$commandTester->execute(array('command' => $command->getName()));
