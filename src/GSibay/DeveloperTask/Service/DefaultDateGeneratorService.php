@@ -19,6 +19,7 @@ use \DateTime as DateTime;
  */
 class DefaultDateGeneratorService implements DateGeneratorService
 {
+    
     /**
      * (non-PHPdoc)
      * @see GSibay\DeveloperTask\Service.DateGeneratorService::generateDates()
