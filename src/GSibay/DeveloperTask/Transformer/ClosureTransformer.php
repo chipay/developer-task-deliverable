@@ -28,6 +28,12 @@ class ClosureTransformer implements Transformer
      */
     public function transform($anObject)
     {
+        /**
+         TODO: check this
+         
+        public function test_callable(callable $callback, $data) {
+            call_user_func($callback, $data);
+        }*/
         return $this->closure($anObject);
     }
 }

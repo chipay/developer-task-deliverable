@@ -11,7 +11,7 @@ namespace GSibay\DeveloperTask\Service;
 use \DateTime as DateTime;
 
 /**
- * Command to generate and save the dates
+ * Generates 
  *
  * @author gsibay
  *
@@ -19,7 +19,7 @@ use \DateTime as DateTime;
 interface DateGeneratorService
 {
     /**
-     * @return array(DateTime)
+     * 
      */
     public function generateDates();
 }
