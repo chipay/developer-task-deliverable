@@ -11,29 +11,28 @@ namespace GSibay\DeveloperTask\Serializer\Serializable;
 use JMS\Serializer\Annotation as JMS;
 
 use \DateTime as DateTime;
-use \DateTimeZone as DateTimeZone;
 
 /**
  * @JMS\AccessorOrder("custom", custom = {"date", "getText"})
  * @author german
- * 
- */ 
+ *
+ */
 class SerializableDate
 {
     /**
-     * 
+     *
      * @var SerializableTimeDates
      */
     //private $father;
-    
+
     /**
-     * @JMS\XmlAttribute 
+     * @JMS\XmlAttribute
      * @JMS\Type("DateTime<'U'>")
      * @JMS\SerializedName("time")
      * @var \DateTime
      */
     private $date;
-    
+
     /**
      * @JMS\Type("DateTime<'Y-m-d H:i:s'>")
      * @JMS\XmlAttribute
@@ -44,12 +43,12 @@ class SerializableDate
     {
         return $this->date;
     }
-    
+
     /**
-     * 
+     *
      */
     public function __construct($date)
     {
-       $this->date = $date; 
+       $this->date = $date;
     }
 }

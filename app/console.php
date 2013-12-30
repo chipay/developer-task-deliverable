@@ -19,8 +19,6 @@ require_once __DIR__ . '/../vendor/autoload.php';
         __DIR__.'/../vendor/jms/serializer/src'
 );
 
-
-
 $console = new Application("Date Utils Application", '1.0');
 
 //TODO: add dependency injection

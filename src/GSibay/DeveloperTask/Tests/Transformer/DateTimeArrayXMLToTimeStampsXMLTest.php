@@ -6,7 +6,7 @@ use GSibay\DeveloperTask\Transformer\DateTimeArrayXMLToTimeStampsXML;
 
 class DateTimeArrayXMLToTimeStampsXMLTest extends \PHPUnit_Framework_TestCase
 {
-    
+
     public function testTransformer_NoEntrie_NoTimestampExpected()
     {
         $xml = <<<EOB
@@ -14,16 +14,16 @@ class DateTimeArrayXMLToTimeStampsXMLTest extends \PHPUnit_Framework_TestCase
 <result>
 </result>
 EOB;
-        
+
         $expectedTransformedXml = <<<EOB
 <?xml version='1.0' encoding='UTF-8'?>
 <timestamps>
-</timestamps>
+ </timestamps>
 EOB;
 
         $transformer = new DateTimeArrayXMLToTimeStampsXML('Y-m-d H:i:s');
         $transformedXML = $transformer->transform($xml);
-        
+
         $this->assertXmlStringEqualsXmlString($expectedTransformedXml, $transformedXML);
     }
 
@@ -36,17 +36,17 @@ EOB;
 <entry><![CDATA[2009-06-30 13:00:00]]></entry>
 </result>
 EOB;
-    
+
         $expectedTransformedXml = <<<EOB
 <?xml version='1.0' encoding='UTF-8'?>
 <timestamps>
     <timestamp time="1246406400" text="2009-06-30 13:00:00" />
 </timestamps>
 EOB;
-    
+
         $transformer = new DateTimeArrayXMLToTimeStampsXML('Y-m-d H:i:s');
         $transformedXML = $transformer->transform($xml);
         $this->assertXmlStringEqualsXmlString($expectedTransformedXml, $transformedXML);
     }
-    
+
 }

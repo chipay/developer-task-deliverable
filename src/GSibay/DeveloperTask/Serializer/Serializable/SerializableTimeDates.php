@@ -14,7 +14,7 @@ use \DateTime as DateTime;
 /**
  * @JMS\XmlRoot("timestamps")
  * @author gsibay
- */ 
+ */
 class SerializableTimeDates
 {
 
@@ -23,14 +23,14 @@ class SerializableTimeDates
      * @var DateTime[]
      */
     private $dates;
-     
+
     /**
-     * 
+     *
      * @param DateTime[] $dates
      */
     public function __construct(array $dates)
     {
-        $this->dates = $dates; 
+        $this->dates = $dates;
     }
-    
+
 }

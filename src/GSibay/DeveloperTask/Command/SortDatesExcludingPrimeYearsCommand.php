@@ -29,13 +29,13 @@ class SortDatesExcludingPrimeYearsCommand extends Command
      * @var Symfony\Component\Serializer\Serializer
      */
     protected $serializer;
-    
+
     /**
      *
      * @var GSibay\DeveloperTask\DateGenerator
      */
     protected $organiser;
-    
+
     /**
      * (non-PHPdoc)
      * @see Symfony\Component\Console\Command.Command::configure()
@@ -43,13 +43,13 @@ class SortDatesExcludingPrimeYearsCommand extends Command
     protected function configure()
     {
         $this->setName("sort-dates-epy")
-        ->setDescription("Parses the dates from the input file and sorts them excluding years that are prime numbers. The result is 
+        ->setDescription("Parses the dates from the input file and sorts them excluding years that are prime numbers. The result is
                 saved to the output file")
         ->setDefinition(array())
         ->setHelp("The <info>sort-dates-epy</info> command parses the input file and creates an output file with
                 the dates sorted excluding years that are prime numbers");
     }
-    
+
     /**
      * (non-PHPdoc)
      * @see Symfony\Component\Console\Command.Command::execute()

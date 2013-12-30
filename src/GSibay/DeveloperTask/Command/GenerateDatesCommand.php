@@ -1,14 +1,7 @@
 <?php
 
-/**
- * This file is part of the DeveloperTask package
- * 
- * @author gsibay
- */
-
 namespace GSibay\DeveloperTask\Command;
 
-use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputInterface;
@@ -18,49 +11,53 @@ use GSibay\DeveloperTask\Service\DateTimeGeneratorService;
 use \DateTime as DateTime;
 
 /**
- * Command to generate the dates and
- * and write them to the output file.
- * 
- * @author gsibay
+ * This command generates dates
+ * generates an XML file containing every 30th of June since
+ * the Unix Epoch, at 1pm GMT, with the following format:
  *
+ * <?xml version="1.0" encoding="UTF-8"?>
+ *     <timestamp time="1246406400" text="2009-06-30 13:00:00" />
+ * </timestamps>
+ *
+ * @author gsibay
  */
 class GenerateDatesCommand extends Command
 {
-    
+
     const OUTPUT_FILE_NAME_ARG = "output-file-name";
     const COMMAND_NAME = "generate-dates";
-    
+
     /**
-     * 
+     *
      * @var JMS\Serializer\SerializerInterface
      */
     private $serializer;
-    
+
     /**
      * Format of the serialization. For instance 'xml'.
      * @var string
      */
-    private $serializeFormat;    
-    
+    private $serializeFormat;
+
     /**
-     * 
+     *
      * @var GSibay\DeveloperTask\Service\DateTimeGeneratorService
      */
     private $dateGeneratorService;
-    
+
     /**
-     * Constructor. 
-     * 
+     * Constructor.
+     *
      * @param GSibay\DeveloperTask\Service\DateTimeGeneratorService $dateGeneratorService
-     * @param JMS\Serializer\SerializerInterface $serializer
-     * @param string $serializeFormat [optional] Format of the serialization.
+     * @param JMS\Serializer\SerializerInterface                    $serializer
+     * @param string                                                $serializeFormat      [optional] Format of the serialization.
      */
     public function __construct(DateTimeGeneratorService $dateGeneratorService, SerializerInterface $serializer, $serializeFormat = 'xml')
     {
         parent::__construct();
         $this->serializer = $serializer;
         $this->dateGeneratorService = $dateGeneratorService;
-        $this->serializeFormat = 'xml';
+        $this->serializeFormat = "xml";
     }
 
     /**
@@ -79,15 +76,15 @@ class GenerateDatesCommand extends Command
     {
         return $this->dateGeneratorService;
     }
-    
+
     /**
-     * @return string 
+     * @return string
      */
     private function getSerializeFormat()
     {
         return $this->serializeFormat;
     }
-    
+
     /**
      * (non-PHPdoc)
      * @see Symfony\Component\Console\Command.Command::configure()
@@ -95,9 +92,15 @@ class GenerateDatesCommand extends Command
     protected function configure()
     {
         $this->setName(GenerateDatesCommand::COMMAND_NAME)
-        ->setDescription("Generates a file with dates as requested by the spec")
+        ->setDescription("Generates an XML file containing every 30th of June since the Unix Epoch at 1PM GMT")
         ->addArgument(GenerateDatesCommand::OUTPUT_FILE_NAME_ARG, InputArgument::REQUIRED, "Name of the output file")
-        ->setHelp("The <info>generate-dates</info> command generate a file with the dates as specified");
+        ->setHelp(<<<EOD
+Generates an XML file containing every 30th of June since the Unix Epoch, at 1pm GMT, with the following format:
+    <?xml version="1.0" encoding="UTF-8"?>
+        <timestamp time="1246406400" text="2009-06-30 13:00:00" />
+    </timestamps>
+EOD
+                );
     }
 
     /**
@@ -109,7 +112,7 @@ class GenerateDatesCommand extends Command
         // create the dates, serialize them and write to the file
         $generatedDates = $this->getDateGeneratorService()->generateDateTimesFromEpoch(new DateTime());
         $serializedDates = $this->getSerializer()->serialize($generatedDates, $this->getSerializeFormat());
-        
+
         $outputFileName = $input->getArgument(GenerateDatesCommand::OUTPUT_FILE_NAME_ARG);
         file_put_contents($outputFileName, $serializedDates);
         $output->writeln('File '.$outputFileName.' generated');

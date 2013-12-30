@@ -19,45 +19,45 @@ class TimeDateUtilsTest extends \PHPUnit_Framework_TestCase
     public function testGetDateTimeZoneGMT_IsDateTimeZoneGMT()
     {
         $utils = new DateTimeUtils();
-        $dateTimeZoneGMT = new DateTimeZone('GMT'); 
+        $dateTimeZoneGMT = new DateTimeZone('GMT');
         $this->assertEquals($utils->getdateTimeZoneGMT(), $dateTimeZoneGMT);
     }
-    
+
     public function testGetDateTimeZonePST_IsDateTimeZonePST()
     {
         $utils = new DateTimeUtils();
         $dateTimeZonePST = new DateTimeZone('PST');
         $this->assertEquals($utils->getdateTimeZonePST(), $dateTimeZonePST);
     }
-    
+
     public function testTimeDateZoneGMT_TwoCalls_GetsSameObject()
     {
         $utils = new DateTimeUtils();
         $dateTimeZoneGMT = $utils->getdateTimeZoneGMT();
         $this->assertTrue($dateTimeZoneGMT === $utils->getdateTimeZoneGMT());
     }
-    
+
     public function testGetTimeDateZonePST_TwoCalls_GetsSameObject()
     {
         $utils = new DateTimeUtils();
         $dateTimeZonePST = $utils->getdateTimeZonePST();
         $this->assertTrue($dateTimeZonePST === $utils->getdateTimeZonePST());
     }
-    
+
     public function testGetUnixEpoch1PMGMT_TwoCalls_GetsSameObject()
     {
         $utils = new DateTimeUtils();
         $unixEpoch1PMGMT = $utils->getUnixEpoch1PMGMT();
         $this->assertTrue($unixEpoch1PMGMT === $utils->getUnixEpoch1PMGMT());
     }
-    
+
     public function testGenerateDates_NegativeInterval_ReturnEmptyArray()
     {
         $utils = new DateTimeUtils();
         $dates = $utils->generateDateTimes(new DateTime(), "+1 day", new DateTime('yesterday'));
         $this->assertEmpty($dates);
     }
-    
+
     public function testGenerateDates_SameDates_ReturnTheDate()
     {
         $utils = new DateTimeUtils();
@@ -65,7 +65,7 @@ class TimeDateUtilsTest extends \PHPUnit_Framework_TestCase
         $dates = $utils->generateDateTimes($date, "+1 year", $date);
         $this->assertEquals($dates, array($date));
     }
-    
+
     public function testGenerateDates_PositiveInterval_ReturnFourDates()
     {
         $utils = new DateTimeUtils();
@@ -74,7 +74,7 @@ class TimeDateUtilsTest extends \PHPUnit_Framework_TestCase
         $dates = $utils->generateDateTimes($from, "next day", $to);
         $this->assertEquals($dates, array($from, new DateTime('21-1-1990'), new DateTime('22-1-1990') ,$to));
     }
-    
+
     public function testGenerateDates_SameDateEveryYear()
     {
         $utils = new DateTimeUtils();

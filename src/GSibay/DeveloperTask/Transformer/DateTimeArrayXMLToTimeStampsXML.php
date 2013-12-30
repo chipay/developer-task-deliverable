@@ -9,18 +9,19 @@ use \XSLTProcessor as XSLTProcessor;
 class DateTimeArrayXMLToTimeStampsXML implements Transformer
 {
 
-    static public function convertStrDate($originalFormat, $targetFormat, $strDate)
+    public static function convertStrDate($originalFormat, $targetFormat, $strDate)
     {
         $newDate = \DateTime::createFromFormat($originalFormat, $strDate);
+
         return $newDate->format($targetFormat);
     }
-    
+
     /**
-     * The format to stamp the date 
+     * The format to stamp the date
      * @var string
      */
     private $format;
-    
+
     /**
      * Constructor
      * @param string $format
@@ -29,7 +30,7 @@ class DateTimeArrayXMLToTimeStampsXML implements Transformer
     {
         $this->format = $format;
     }
-    
+
     /**
      * (non-PHPdoc)
      * @see Gsibay\DeveloperTask\Transformer.Transformer::transform()
@@ -42,7 +43,7 @@ class DateTimeArrayXMLToTimeStampsXML implements Transformer
 
         $xsl = <<<EOT
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet version="1.0" 
+<xsl:stylesheet version="1.0"
      xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:php="http://php.net/xsl" exclude-result-prefixes="php">
     <xsl:output method="xml" encoding="UTF-8" indent="yes"/>
     <xsl:template match="result">
@@ -51,7 +52,7 @@ class DateTimeArrayXMLToTimeStampsXML implements Transformer
         </timestamps>
     </xsl:template>
     <xsl:template match="entry">
-        <timestamp> 
+        <timestamp>
             <xsl:attribute name="asIs">
                 <xsl:value-of select="." />
             </xsl:attribute>
@@ -65,13 +66,14 @@ class DateTimeArrayXMLToTimeStampsXML implements Transformer
     </xsl:template>
 </xsl:stylesheet>
 EOT;
-        
+
         $xmldoc = DOMDocument::loadXML($anObject);
         $xsldoc = DOMDocument::loadXML($xsl);
-        
+
         $proc = new XSLTProcessor();
         $proc->registerPHPFunctions();
         $proc->importStyleSheet($xsldoc);
+
         return $proc->transformToXML($xmldoc);
     }
 }

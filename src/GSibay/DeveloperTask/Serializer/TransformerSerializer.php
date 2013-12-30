@@ -37,8 +37,8 @@ class TransformerSerializer implements SerializerInterface
 
     /**
      * Constructor.
-     * @param JMS\Serializer\SerializerInterface $serializer The serializer to wrap.
-     * @param Gsibay\DeveloperTask\Transformer\Transformer $postSerializationTransformer The transformer used after serialization
+     * @param JMS\Serializer\SerializerInterface           $serializer                    The serializer to wrap.
+     * @param Gsibay\DeveloperTask\Transformer\Transformer $postSerializationTransformer  The transformer used after serialization
      * @param Gsibay\DeveloperTask\Transformer\Transformer $preDeserializationTransformer The transformer used before deserialization
      */
     public function __construct($serializer, $postSerializationTransformer, $preDeserializationTransformer)

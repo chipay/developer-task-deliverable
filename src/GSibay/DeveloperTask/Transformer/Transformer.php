@@ -7,7 +7,7 @@ interface Transformer
     /**
      * Returns the closure that performs the transformation
      * @param $anObject
-     * @returns Closure 
+     * @returns Closure
      */
     public function transform($anObject);
 }
