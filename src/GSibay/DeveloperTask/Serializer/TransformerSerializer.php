@@ -3,6 +3,8 @@
 namespace GSibay\DeveloperTask\Serializer;
 
 use JMS\Serializer\SerializerInterface;
+use JMS\Serializer\SerializationContext;
+use JMS\Serializer\DeserializationContext;
 use GSibay\DeveloperTask\Transformer\Transformer;
 
 /**

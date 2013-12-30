@@ -1,13 +1,11 @@
 <?php
 
-namespace GSibay\DeveloperTask\Tests;
+namespace GSibay\DeveloperTask\Tests\Transformer;
 
 use GSibay\DeveloperTask\Transformer\DateTimeArrayXMLToTimeStampsXML;
 
 class DateTimeArrayXMLToTimeStampsXMLTest extends \PHPUnit_Framework_TestCase
 {
-    
-    //TODO: add the TimeZone to the format in these tests
     
     public function testTransformer_NoEntrie_NoTimestampExpected()
     {
@@ -23,8 +21,6 @@ EOB;
 </timestamps>
 EOB;
 
-        ////var_dump('originalXML: '.$xml);
-        
         $transformer = new DateTimeArrayXMLToTimeStampsXML('Y-m-d H:i:s');
         $transformedXML = $transformer->transform($xml);
         

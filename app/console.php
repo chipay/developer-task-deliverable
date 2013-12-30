@@ -1,13 +1,12 @@
 #!/usr/bin/env php
 <?php
 
-use Symfony\Component\Console\Application;
-use JMS\Serializer\SerializerBuilder;
 use GSibay\DeveloperTask\Command\GenerateDatesCommand;
 use GSibay\DeveloperTask\Command\SortDatesExcludingPrimeYearsCommand;
-use GSibay\DeveloperTask\Service\DefaultDateGeneratorService;
-use Symfony\Component\Console\Tester\CommandTester;
-
+use GSibay\DeveloperTask\Service\DefaultDateTimeGeneratorService;
+use GSibay\DeveloperTask\DateTime\DateTimeUtils;
+use Symfony\Component\Console\Application;
+use JMS\Serializer\SerializerBuilder;
 
 // set to run indefinitely if needed
 set_time_limit(0);
@@ -24,14 +23,13 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 $console = new Application("Date Utils Application", '1.0');
 
-$dateGeneratorService = new DefaultDateGeneratorService();
-//TODO add dependency injection
+//TODO: add dependency injection
+$dateGeneratorService = new DefaultDateTimeGeneratorService(new DateTimeUtils());
 
+//TODO add dependency injection
 $serializer = SerializerBuilder::create()->build();
 
-$console ->add(new GenerateDatesCommand($dateGeneratorService, $serializer));
-$console ->add(new SortDatesExcludingPrimeYearsCommand());
+$console->add(new GenerateDatesCommand($dateGeneratorService, $serializer));
+// TODO: ADD the other command
+//$console->add(new SortDatesExcludingPrimeYearsCommand());
 $console->run();
-//$command = $console->find(GenerateDatesCommand::COMMAND_NAME);
-//$commandTester =  new CommandTester($command);
-//$commandTester->execute(array('command' => $command->getName()));

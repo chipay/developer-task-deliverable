@@ -1,4 +1,6 @@
 *~
+# test cli
+app/tests.php
 # Eclipse project files
 .buildpath
 .project
