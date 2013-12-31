@@ -7,7 +7,6 @@ use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 use GSibay\DeveloperTask\Command\GenerateDatesCommand;
 use GSibay\DeveloperTask\Service\DateGeneratorService;
-
 use \Mockery as m;
 
 class GenerateDatesCommandTest extends \PHPUnit_Framework_TestCase
@@ -43,17 +42,7 @@ class GenerateDatesCommandTest extends \PHPUnit_Framework_TestCase
         $dateGeneratorServiceMock->shouldReceive('generateDateTimesFromEpoch')->once()->andReturn('generatedDates');
         $serializerMock->shouldReceive('serialize')->once()->with('generatedDates','xml')->andReturn('serializedData');
 
-        //test the file was created
-
-        /**
-        $mock->shouldReceive(‘divertPower’)->with(0.40, ‘sensors’)->once()->ordered();
-        $mock->shouldReceive(‘divertPower’)->with(0.30, ‘auxengines’)->once()->ordered();
-        $mock->shouldReceive(‘runDiagnosticLevel’)->with(1)->once()->andReturn(true)->ordered();
-        $mock->shouldReceive(‘runDiagnosticLevel’)->with(M::type(‘int’))->zeroOrMoreTimes();
-        */
-        //$starship = new Starship($mock);
-        //$this->assertTrue($starship->enterOrbit());
-
+        //test that the file was created
         $application->add(new GenerateDatesCommand($dateGeneratorServiceMock, $serializerMock));
 
         $command = $application->find(GenerateDatesCommand::COMMAND_NAME);
