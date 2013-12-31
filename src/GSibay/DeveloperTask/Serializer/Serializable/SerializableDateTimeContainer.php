@@ -15,7 +15,7 @@ use \DateTime as DateTime;
  * @JMS\XmlRoot("timestamps")
  * @author gsibay
  */
-class SerializableTimeDates
+class SerializableDateTimeContainer
 {
 
     /**

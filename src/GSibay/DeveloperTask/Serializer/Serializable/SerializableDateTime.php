@@ -9,21 +9,15 @@
 namespace GSibay\DeveloperTask\Serializer\Serializable;
 
 use JMS\Serializer\Annotation as JMS;
-
 use \DateTime as DateTime;
 
 /**
  * @JMS\AccessorOrder("custom", custom = {"date", "getText"})
- * @author german
+ * @author gsibay
  *
  */
-class SerializableDate
+class SerializableDateTime
 {
-    /**
-     *
-     * @var SerializableTimeDates
-     */
-    //private $father;
 
     /**
      * @JMS\XmlAttribute

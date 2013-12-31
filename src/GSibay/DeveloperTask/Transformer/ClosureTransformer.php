@@ -5,21 +5,27 @@ namespace GSibay\DeveloperTask\Transformer;
 /**
  *
  * Transformer defined by a closure.
+ * The closure receives an object and returns
+ * the transformed object.
  *
+ * TODO: do I use this? remove if not
  * @author gsibay
  *
  */
-class ClosureTransformer implements Transformer
+class ClosureTransformer extends AbstractTransformer
 {
     /**
-     *
-     * @var \Closure (anObject) -> (anotherObject)
+     * @var callable
      */
     private $closure;
 
-    public function __construct($closure)
+    /**
+     * The closure that performs the transformation.
+     * @param \Closure $closure
+     */
+    public function __construct(callable $callable)
     {
-        $this->closure = $closure;
+        $this->closure = $callable;
     }
 
     /**
@@ -28,14 +34,6 @@ class ClosureTransformer implements Transformer
      */
     public function transform($anObject)
     {
-        /**
-         TODO: check this
-
-        public function test_callable(callable $callback, $data)
-        {
-            call_user_func($callback, $data);
-        }*/
-
-        return $this->closure($anObject);
+        return call_user_func($this->closure, $anObject);
     }
 }

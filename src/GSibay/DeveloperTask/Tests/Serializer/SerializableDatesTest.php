@@ -1,13 +1,14 @@
 <?php
 
-namespace GSibay\DeveloperTask\Tests\Serializer;
+namespace GSibay\DeveloperTask\Tests\Serializer\Serializable;
 
-use GSibay\DeveloperTask\Serializer\Serializable\SerializableTimeDates;
-use GSibay\DeveloperTask\Serializer\Serializable\SerializableDate;
+use GSibay\DeveloperTask\Serializer\Serializable\SerializableDateTimeContainer;
+use GSibay\DeveloperTask\Serializer\Serializable\SerializableDateTime;
 use JMS\Serializer\SerializerBuilder;
 use \DateTime as DateTime;
 
-class SerializableDatesTest extends \PHPUnit_Framework_TestCase
+//TODO: try to clean up these tests to not depend on anything. Maybe only the Serializer
+class SerializableTimeDatesTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * (non-PHPdoc)
@@ -22,10 +23,10 @@ class SerializableDatesTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testSerializableDates_EmptyArray_NoRows()
+    public function testSerializableTimeDates_EmptyArray_NoRows()
     {
 
-        $serializableDates = new SerializableTimeDates(array());
+        $serializableDates = new SerializableDateTimeContainer(array());
 
         $serialized = SerializerBuilder::create()->build()->serialize($serializableDates, 'xml');;
 
@@ -37,11 +38,11 @@ EOB;
         $this->assertXmlStringEqualsXmlString($expectedTransformedXml, $serialized);
     }
 
-    public function testSerializableDates_OneDate_OneRow()
+    public function testSerializableTimeDates_OneDate_OneRow()
     {
         $date = new DateTime('2009-06-30 13:00:00');
-        $serializableDate = new SerializableDate($date);
-        $serializableDates = new SerializableTimeDates(array($serializableDate));
+        $serializableDate = new SerializableDateTime($date);
+        $serializableDates = new SerializableDateTimeContainer(array($serializableDate));
 
         $serialized = SerializerBuilder::create()->build()->serialize($serializableDates, 'xml');;
 

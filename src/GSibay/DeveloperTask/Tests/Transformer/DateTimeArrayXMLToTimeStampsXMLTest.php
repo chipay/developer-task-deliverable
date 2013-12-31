@@ -18,7 +18,7 @@ EOB;
         $expectedTransformedXml = <<<EOB
 <?xml version='1.0' encoding='UTF-8'?>
 <timestamps>
- </timestamps>
+</timestamps>
 EOB;
 
         $transformer = new DateTimeArrayXMLToTimeStampsXML('Y-m-d H:i:s');

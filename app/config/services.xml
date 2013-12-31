@@ -1,0 +1,70 @@
+<?xml version="1.0" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="date_time_utils.class">GSibay\DeveloperTask\DateTime\DateTimeUtils</parameter>
+        <parameter key="default_date_time_generator_service.class">GSibay\DeveloperTask\Service\DefaultDateTimeGeneratorService</parameter>
+        <parameter key="transformer_serializer.class">GSibay\DeveloperTask\Serializer\TransformerSerializer</parameter>
+        <parameter key="serializer.class">JMS\Serializer\Serializer</parameter>
+        <parameter key="serializer_builder.class">JMS\Serializer\SerializerBuilder</parameter>
+        <parameter key="date_times_to_serializable_date_time_container.class">GSibay\DeveloperTask\Transformer\DateTimesToSerializableDateTimeContainer</parameter>
+        <parameter key="date_time_to_serializable_date_time.class">GSibay\DeveloperTask\Transformer\DateTimeToSerializableDateTime</parameter>
+    </parameters>
+
+    <services>
+        <service id="date_time_utils" class="%date_time_utils.class%"/>
+        <service id="serializer" class="%serializer.class%"
+        	factory-class="%serializer_builder.class%" factory-method="create" />
+        <service id="serializable_date_time_transformer_serializer" class="%transformer_serializer.class%">
+            <argument type="service" id="serializer" />
+            <argument type="service" id="date_times_to_serializable_date_time_container" />
+        </service>
+        <service id="date_time_to_serializable_date_time" class="%date_time_to_serializable_date_time.class%" />
+        <service id="date_times_to_serializable_date_time_container" class="%date_times_to_serializable_date_time_container.class%">
+        	<argument type="service" id="date_time_to_serializable_date_time" />
+        </service>
+
+
+        <!-- service id="date_time_utils" class="%date_time_utils.class%"/-->
+        <!--
+        <service id="event_dispatcher" class="%event_dispatcher.class%">
+            <argument type="service" id="service_container" />
+        </service>
+
+        <service id="http_kernel" class="%http_kernel.class%">
+            <argument type="service" id="event_dispatcher" />
+            <argument type="service" id="service_container" />
+            <argument type="service" id="controller_resolver" />
+            <argument type="service" id="request_stack" />
+        </service>
+
+        <service id="request_stack" class="%request_stack.class%" />
+
+        <service id="cache_warmer" class="%cache_warmer.class%">
+            <argument type="collection" />
+        </service>
+
+        <service id="cache_clearer" class="%cache_clearer.class%">
+            <argument type="collection" />
+        </service>
+
+        <service id="request" scope="request" synthetic="true" synchronized="true" />
+
+        <service id="service_container" synthetic="true" />
+
+        <service id="kernel" synthetic="true" />
+
+        <service id="filesystem" class="%filesystem.class%"></service>
+
+        <service id="file_locator" class="%file_locator.class%">
+            <argument type="service" id="kernel" />
+            <argument>%kernel.root_dir%/Resources</argument>
+        </service>
+
+        <service id="uri_signer" class="%uri_signer.class%">
+            <argument>%kernel.secret%</argument>
+        </service-->
+    </services>
+</container>

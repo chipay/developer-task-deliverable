@@ -6,7 +6,7 @@ use GSibay\DeveloperTask\Transformer\Transformer;
 use \DOMDocument as DOMDocument;
 use \XSLTProcessor as XSLTProcessor;
 
-class DateTimeArrayXMLToTimeStampsXML implements Transformer
+class DateTimeArrayXMLToTimeStampsXML extends AbstractTransformer
 {
 
     public static function convertStrDate($originalFormat, $targetFormat, $strDate)
