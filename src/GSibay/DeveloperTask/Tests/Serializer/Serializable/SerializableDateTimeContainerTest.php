@@ -26,7 +26,7 @@ class SerializableDateTimeContainerTest extends \PHPUnit_Framework_TestCase
         // Bootstrap the JMS custom annotations for Object mapping (serializatin/deserialization)
         \Doctrine\Common\Annotations\AnnotationRegistry::registerAutoloadNamespace(
                 'JMS\Serializer\Annotation',
-                __DIR__.'/../../../../../vendor/jms/serializer/src'
+                __DIR__.'/../../../../../../vendor/jms/serializer/src'
         );
     }
 
