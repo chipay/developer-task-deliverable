@@ -9,7 +9,6 @@
 namespace GSibay\DeveloperTask\Serializer\Serializable;
 
 use JMS\Serializer\Annotation as JMS;
-use \DateTime as DateTime;
 
 /**
  * @JMS\XmlRoot("timestamps")
@@ -20,17 +19,22 @@ class SerializableDateTimeContainer
 
     /**
      * @JMS\XmlList(inline = true, entry = "timestamp")
-     * @var DateTime[]
+     * @JMS\Type("array<GSibay\DeveloperTask\Serializer\Serializable\SerializableDateTime>")
+     * @var SerializableDateTime[]
      */
     private $dates;
 
     /**
      *
-     * @param DateTime[] $dates
+     * @param SerializableDateTime[] $dates
      */
     public function __construct(array $dates)
     {
         $this->dates = $dates;
     }
 
+    public function getDates()
+    {
+        return $this->dates;
+    }
 }
