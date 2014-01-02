@@ -18,12 +18,17 @@
         <service id="default_date_time_generator_service" class="GSibay\DeveloperTask\Service\DefaultDateTimeGeneratorService">
         	<argument type="service" id="date_time_utils" />
         </service>
-        <service id="serializer" class="%serializer.class%"
-        	factory-class="%serializer_builder.class%" factory-method="create" />
+
+        <!-- Serializers -->
+        <service id="serializer_builder" class="%serializer_builder.class%" factory-class="%serializer_builder.class%" factory-method="create" />
+        <service id="serializer" class="%serializer.class%" factory-service="serializer_builder" factory-method="build" />
+
         <service id="date_times_to_serializable_date_time_container_transformer_serializer" class="%transformer_serializer.class%">
             <argument type="service" id="serializer" />
             <argument type="service" id="date_times_to_serializable_date_time_container" />
         </service>
+
+        <!-- Transformers -->
         <service id="date_time_to_serializable_date_time" class="%date_time_to_serializable_date_time.class%" />
         <service id="date_times_to_serializable_date_time_container" class="%date_times_to_serializable_date_time_container.class%">
         	<argument type="service" id="date_time_to_serializable_date_time" />

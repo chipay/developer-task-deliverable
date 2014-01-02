@@ -5,9 +5,8 @@ use Symfony\Component\Console\Application;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\Config\FileLocator;
-use JMS\Serializer\SerializerBuilder;
 
-// set to run indefinitely if needed
+//uncomment if to run indefinitely if needed (or set another time limit)
 //set_time_limit(0);
 
 require_once __DIR__.'/../vendor/autoload.php';
@@ -20,13 +19,12 @@ require_once __DIR__.'/../vendor/autoload.php';
 
 $console = new Application("Date Utils Application", '1.0');
 
-// adds dependency injection support
+// Dependency injection support
 $container = new ContainerBuilder();
 $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/config'));
 $loader->load('services.xml');
 
-//$serializer = SerializerBuilder::create()->build();
-// the command services have the "console.command" tag. Find them and add them to the app.
+// The command services have the "console.command" tag. Find them and add them to the app.
 $commandServiceIds = $container->findTaggedServiceIds("console.command");
 
 foreach ($commandServiceIds as $commandServiceId => $value) {
