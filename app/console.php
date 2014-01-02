@@ -6,10 +6,6 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\Config\FileLocator;
 use JMS\Serializer\SerializerBuilder;
-use GSibay\DeveloperTask\Command\GenerateDatesCommand;
-use GSibay\DeveloperTask\Command\SortDatesExcludingPrimeYearsCommand;
-use GSibay\DeveloperTask\Service\DefaultDateTimeGeneratorService;
-use GSibay\DeveloperTask\DateTime\DateTimeUtils;
 
 // set to run indefinitely if needed
 //set_time_limit(0);

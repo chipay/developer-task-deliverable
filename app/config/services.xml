@@ -35,7 +35,7 @@
         	<argument type="service" id="default_date_time_generator_service" />
         	<argument type="service" id="date_times_to_serializable_date_time_container_transformer_serializer" />
         </service>
-		
+
         <!-- service id="date_time_utils" class="%date_time_utils.class%"/-->
         <!--
         <service id="event_dispatcher" class="%event_dispatcher.class%">
