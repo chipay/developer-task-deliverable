@@ -9,14 +9,14 @@ use GSibay\DeveloperTask\Transformer\Transformer;
 
 /**
  *
- * A serializer adapter. 
- * 
+ * A serializer adapter.
+ *
  * One transformation is performed before serialization and another one is applied after deserialization.
- * It is not required to provide both Transformers. If a transformer is not provided during construction 
- * then that transformation is notperformed. 
+ * It is not required to provide both Transformers. If a transformer is not provided during construction
+ * then that transformation is notperformed.
  * object -> pre serialization transformation (if the transformer is present) -> serialization.
  * serialized object -> deserialization -> post deserialization transformation (if the transformer is present)
- * 
+ *
  * @author gsibay
  *
  */
@@ -42,8 +42,8 @@ class TransformerSerializer implements SerializerInterface
 
     /**
      *
-     * @param JMS\Serializer\SerializerInterface           $serializer                    The serializer to wrap.
-     * @param GSibay\DeveloperTask\Transformer\Transformer $preSerializationTransformer  The transformer used before serialization
+     * @param JMS\Serializer\SerializerInterface           $serializer                     The serializer to wrap.
+     * @param GSibay\DeveloperTask\Transformer\Transformer $preSerializationTransformer    The transformer used before serialization
      * @param GSibay\DeveloperTask\Transformer\Transformer $postDeserializationTransformer The transformer used after deserialization
      */
     public function __construct($serializer, $preSerializationTransformer = null, $postDeserializationTransformer = null)
@@ -60,6 +60,7 @@ class TransformerSerializer implements SerializerInterface
     public function serialize($data, $format, SerializationContext $context = null)
     {
         $transformedData = $this->transform($data, $this->preSerializationTransformer);
+
         return $this->serializer->serialize($transformedData, $format, $context);
     }
     /**
@@ -69,6 +70,7 @@ class TransformerSerializer implements SerializerInterface
     public function deserialize($data, $type, $format, DeserializationContext $context = null)
     {
         $deserializedData =  $this->serializer->deserialize($data, $type, $format, $context);
+
         return $this->transform($deserializedData, $this->postDeserializationTransformer);
     }
 
@@ -78,7 +80,7 @@ class TransformerSerializer implements SerializerInterface
      *
      * @param $data
      * @param Transformer $transformer
-     * @return $data or transformed $data
+     *                                 @return $data or transformed $data
      */
     private function transform($data, Transformer $transformer = null)
     {

@@ -14,7 +14,7 @@ use GSibay\DeveloperTask\Serializer\Serializable\SerializableDateTimeContainer;
  * Transforms an array of DateTime to a SerializableDateTimeContainer.
  * The SerializableDateTimeContainer contains the same dates and in the same
  * order but transformed to SerializableDateTime objects.
- * 
+ *
  * @author gsibay
  *
  */
@@ -40,6 +40,7 @@ class DateTimesToSerializableDateTimeContainer extends AbstractTransformer
     {
         // transform DateTime[] to SerializableDateTime[]
         $serializableDateTimeArray = array_map(array($this->toSerializableDateTime, 'transform'), $anObject);
+
         return new SerializableDateTimeContainer($serializableDateTimeArray);
     }
 

@@ -30,9 +30,9 @@ class DefaultDateTimeGeneratorServiceTest extends \PHPUnit_Framework_TestCase
         return $this->service->generateDateTimesFromEpoch($until);
     }
 
-    public function testGenerateDateTimesFromEpoch_UntilBeforeEpoch_ReturnEmptyArray()
+    public function test_GenerateDateTimesFromEpoch_UntilBeforeEpoch_ReturnEmptyArray()
     {
-        $date23_12_52 = \DateTime::createFromFormat('d-m-Y', '23-10-1952');
+        $date23_12_52 = \DateTime::createFromFormat('d-m-Y', '23-10-1952', new DateTimeZone('GMT'));
         $this->assertEquals($this->generateDateTimes($date23_12_52), array());
     }
 
@@ -45,6 +45,7 @@ class DefaultDateTimeGeneratorServiceTest extends \PHPUnit_Framework_TestCase
 
     public function testGenerateDateTimesFromEpoch_Until30_6_1970_1PMGMT_ReturnOneDate()
     {
+        //TODO: use factory method \DateTime::createFromFormat('Y-m-d H:i:s', '1970-06-30 13:00:00', new DateTimeZone('GMT'));
         $date30_6_70_1PM_GMT = \DateTime::createFromFormat('U', gmmktime(13, 0, 0, 6, 30, 1970));
         $expected = array($date30_6_70_1PM_GMT);
         $this->assertEquals($expected, $this->generateDateTimes($date30_6_70_1PM_GMT));

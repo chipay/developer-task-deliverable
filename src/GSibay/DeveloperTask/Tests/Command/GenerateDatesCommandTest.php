@@ -7,7 +7,7 @@ use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 use GSibay\DeveloperTask\Command\GenerateDatesCommand;
 use GSibay\DeveloperTask\Service\DateGeneratorService;
-use \Mockery as m;
+use \Mockery as M;
 
 class GenerateDatesCommandTest extends \PHPUnit_Framework_TestCase
 {
@@ -20,8 +20,8 @@ class GenerateDatesCommandTest extends \PHPUnit_Framework_TestCase
         $application = new Application();
 
         // create dummies for the service and the serializer
-        $dateGeneratorService = m::mock('GSibay\DeveloperTask\Service\DateTimeGeneratorService');
-        $serializer = m::mock('JMS\Serializer\SerializerInterface');
+        $dateGeneratorService = M::mock('GSibay\DeveloperTask\Service\DateTimeGeneratorService');
+        $serializer = M::mock('JMS\Serializer\SerializerInterface');
 
         $application->add(new GenerateDatesCommand($dateGeneratorService, $serializer));
 
@@ -36,11 +36,11 @@ class GenerateDatesCommandTest extends \PHPUnit_Framework_TestCase
         $application = new Application();
 
         // get mocks
-        $dateGeneratorServiceMock = m::mock('GSibay\DeveloperTask\Service\DateTimeGeneratorService');
-        $serializerMock = m::mock('JMS\Serializer\SerializerInterface');
+        $dateGeneratorServiceMock = M::mock('GSibay\DeveloperTask\Service\DateTimeGeneratorService');
+        $serializerMock = M::mock('JMS\Serializer\SerializerInterface');
 
-        $dateGeneratorServiceMock->shouldReceive('generateDateTimesFromEpoch')->once()->andReturn('generatedDates');
-        $serializerMock->shouldReceive('serialize')->once()->with('generatedDates','xml')->andReturn('serializedData');
+        $dateGeneratorServiceMock->shouldReceive('generateDateTimesFromEpoch')->once()->ordered()->andReturn('generatedDates');
+        $serializerMock->shouldReceive('serialize')->once()->with('generatedDates','xml')->ordered()->andReturn('serializedData');
 
         //test that the file was created
         $application->add(new GenerateDatesCommand($dateGeneratorServiceMock, $serializerMock));

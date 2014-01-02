@@ -4,24 +4,24 @@ namespace GSibay\DeveloperTask\Tests\Transformer;
 
 use GSibay\DeveloperTask\Transformer\ChainTransformer;
 use \DateTime as DateTime;
-use \Mockery as m;
+use \Mockery as M;
 
 class ChainTransformerTest extends \PHPUnit_Framework_TestCase
 {
 
-    public function testEmptyChain_ObjetNotChanged()
+    public function test_Transform_EmptyChain_ObjetNotChanged()
     {
         $now = new DateTime();
         $chainTransformer = new ChainTransformer(array());
         $this->assertSame($now, $chainTransformer->transform($now));
     }
 
-    public function testOneTransformer_TransformerCalledOnce()
+    public function test_Transform_OneTransformer_TransformerCalledOnce()
     {
-        $objectToTransform = "A string to be transformed";
-        $expectedTransformedObject = "The transformed string";
+        $objectToTransform = 'A string to be transformed';
+        $expectedTransformedObject = 'The transformed string';
 
-        $transformer = m::mock('GSibay\DeveloperTask\Transformer\Transformer');
+        $transformer = M::mock('GSibay\DeveloperTask\Transformer\Transformer');
         $transformer->shouldReceive('transform')->once()->with($objectToTransform)
             ->andReturn($expectedTransformedObject);
 
@@ -31,24 +31,21 @@ class ChainTransformerTest extends \PHPUnit_Framework_TestCase
                 $chainTransformer->transform($objectToTransform));
     }
 
-    public function testThreeTransformer_AllTransformersCalledInChain()
+    public function test_Transform_ThreeTransformer_AllTransformersCalledInChain()
     {
         $objectToTransform = new DateTime();
         $objectAfterFirstTransformation = new DateTime('20-10-1990');
         $objectAfterSecondTransformation = new DateTime('10-10-1998');
         $objectAfterThirdTransformation = new DateTime('1-1-1970');
 
-        $firstTransformer = m::mock('GSibay\DeveloperTask\Transformer\Transformer');
-        $firstTransformer->shouldReceive('transform')->with($objectToTransform)
-            ->andReturn($objectAfterFirstTransformation);
+        $firstTransformer = M::mock('GSibay\DeveloperTask\Transformer\Transformer');
+        $firstTransformer->shouldReceive('transform')->with($objectToTransform)->once()->ordered()->andReturn($objectAfterFirstTransformation);
 
-        $secondTransformer = m::mock('GSibay\DeveloperTask\Transformer\Transformer');
-        $secondTransformer->shouldReceive('transform')->with($objectAfterFirstTransformation)
-            ->andReturn($objectAfterSecondTransformation);
+        $secondTransformer = M::mock('GSibay\DeveloperTask\Transformer\Transformer');
+        $secondTransformer->shouldReceive('transform')->with($objectAfterFirstTransformation)->once()->ordered()->andReturn($objectAfterSecondTransformation);
 
-        $thirdTransformer = m::mock('GSibay\DeveloperTask\Transformer\Transformer');
-        $thirdTransformer->shouldReceive('transform')->with($objectAfterSecondTransformation)
-            ->andReturn($objectAfterThirdTransformation);
+        $thirdTransformer = M::mock('GSibay\DeveloperTask\Transformer\Transformer');
+        $thirdTransformer->shouldReceive('transform')->with($objectAfterSecondTransformation)->once()->ordered()->andReturn($objectAfterThirdTransformation);
 
         $chainTransformer = new ChainTransformer(
                 array($firstTransformer, $secondTransformer, $thirdTransformer));

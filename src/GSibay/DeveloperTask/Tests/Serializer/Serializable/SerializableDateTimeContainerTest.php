@@ -12,12 +12,6 @@ use \DateTimeZone as DateTimeZone;
 class SerializableDateTimeContainerTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * The serializer service
-     * @var SerializerInterface
-     */
-    private $serializer;
-
-    /**
      * (non-PHPdoc)
      * @see PHPUnit_Framework_TestCase::setUpBeforeClass()
      */
@@ -30,8 +24,15 @@ class SerializableDateTimeContainerTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * The serializer service
+     * @var SerializerInterface
+     */
+    private $serializer;
+
     public function setUp()
     {
+        parent::setUp();
         $this->serializer = SerializerBuilder::create()->build();
     }
 
@@ -129,25 +130,25 @@ class SerializableDateTimeContainerTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($serializableDates == $deserialized);
     }
 
-    public function testSerializeAndDeserializeSerializableTimeDates_EmptyArray_NoRowsExpected()
+    public function test_SerializeAndDeserializeSerializableTimeDates_EmptyArray_NoRowsExpected()
     {
         $dates = array();
         $this->assertSerializationAndDeserializationsBehavesAsExpected($dates);
     }
 
-    public function testSerializeAndDeserializeSerializableTimeDates_OneDateWithDateTimeZoneGMT_OneRowExpected()
+    public function test_SerializeAndDeserializeSerializableTimeDates_OneDateWithDateTimeZoneGMT_OneRowExpected()
     {
         $dates = array(new DateTime('1972-02-28 13:00:00', new DateTimeZone('GMT')));
         $this->assertSerializationAndDeserializationsBehavesAsExpected($dates);
     }
 
-    public function testSerializeSerializableTimeDates_OneDateWithDateTimeZonePST_OneRowExpected()
+    public function test_SerializeSerializableTimeDates_OneDateWithDateTimeZonePST_OneRowExpected()
     {
         $dates = array(new DateTime('1999-12-31 11:12:13', new DateTimeZone('PST')));
         $this->assertSerializationAndDeserializationsBehavesAsExpected($dates);
     }
 
-    public function testSerializeSerializableTimeDates_ThreeDatesWithDefaultTimeZone_ThreeRowsInTheRightOrderExpected()
+    public function test_SerializeSerializableTimeDates_ThreeDatesWithDefaultTimeZone_ThreeRowsInTheRightOrderExpected()
     {
         $dates = array(new DateTime('1987-12-28 07:34:50'), new DateTime('2014-08-01 23:59:59'), new DateTime('1971-05-17 12:23:57'));
         $this->assertSerializationAndDeserializationsBehavesAsExpected($dates);
@@ -156,7 +157,7 @@ class SerializableDateTimeContainerTest extends \PHPUnit_Framework_TestCase
     /**
      * This test is actually one test for each timezone in Asia
      */
-    public function testSerializeSerializableTimeDates_FourDatesWithEveryAsianTimeZone_FourRowsInTheRightOrderExpected()
+    public function test_SerializeSerializableTimeDates_FourDatesWithEveryAsianTimeZone_FourRowsInTheRightOrderExpected()
     {
         $dates = array(new DateTime('1987-12-28 07:34:50'), new DateTime('2014-08-01 23:59:59'),
                 new DateTime('1971-05-17 12:23:57'), new DateTime('2001-12-30 14:36:36'));

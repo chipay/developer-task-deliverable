@@ -3,62 +3,61 @@
 namespace GSibay\DeveloperTask\Tests\DateTime;
 
 use GSibay\DeveloperTask\DateTime\DateTimeUtils;
-
 use \DateTime as DateTime;
 use \DateTimeZone as DateTimeZone;
 
-class TimeDateUtilsTest extends \PHPUnit_Framework_TestCase
+class DateTimeUtilsTest extends \PHPUnit_Framework_TestCase
 {
 
-    public function testGetUnixEpopch1PMGMT_TimestampEqualsConstant()
+    public function test_GetUnixEpopch1PMGMT_TimestampEqualsConstant()
     {
         $utils = new DateTimeUtils();
         $this->assertEquals($utils->getUnixEpoch1PMGMT()->getTimestamp(), DateTimeUtils::UNIX_EPOCH_1PM_GMT);
     }
 
-    public function testGetDateTimeZoneGMT_IsDateTimeZoneGMT()
+    public function test_GetDateTimeZoneGMT_IsDateTimeZoneGMT()
     {
         $utils = new DateTimeUtils();
         $dateTimeZoneGMT = new DateTimeZone('GMT');
         $this->assertEquals($utils->getdateTimeZoneGMT(), $dateTimeZoneGMT);
     }
 
-    public function testGetDateTimeZonePST_IsDateTimeZonePST()
+    public function test_GetDateTimeZonePST_IsDateTimeZonePST()
     {
         $utils = new DateTimeUtils();
         $dateTimeZonePST = new DateTimeZone('PST');
         $this->assertEquals($utils->getdateTimeZonePST(), $dateTimeZonePST);
     }
 
-    public function testTimeDateZoneGMT_TwoCalls_GetsSameObject()
+    public function test_GetDateTimeZoneGMT_TwoCalls_GetsSameObject()
     {
         $utils = new DateTimeUtils();
         $dateTimeZoneGMT = $utils->getdateTimeZoneGMT();
         $this->assertTrue($dateTimeZoneGMT === $utils->getdateTimeZoneGMT());
     }
 
-    public function testGetTimeDateZonePST_TwoCalls_GetsSameObject()
+    public function test_GetDateTimeTimeZonePST_TwoCalls_GetsSameObject()
     {
         $utils = new DateTimeUtils();
         $dateTimeZonePST = $utils->getdateTimeZonePST();
         $this->assertTrue($dateTimeZonePST === $utils->getdateTimeZonePST());
     }
 
-    public function testGetUnixEpoch1PMGMT_TwoCalls_GetsSameObject()
+    public function test_GetUnixEpoch1PMGMT_TwoCalls_GetsSameObject()
     {
         $utils = new DateTimeUtils();
         $unixEpoch1PMGMT = $utils->getUnixEpoch1PMGMT();
         $this->assertTrue($unixEpoch1PMGMT === $utils->getUnixEpoch1PMGMT());
     }
 
-    public function testGenerateDates_NegativeInterval_ReturnEmptyArray()
+    public function test_GenerateDateTimes_NegativeInterval_ReturnEmptyArray()
     {
         $utils = new DateTimeUtils();
         $dates = $utils->generateDateTimes(new DateTime(), "+1 day", new DateTime('yesterday'));
         $this->assertEmpty($dates);
     }
 
-    public function testGenerateDates_SameDates_ReturnTheDate()
+    public function test_GenerateDateTimes_SameDates_ReturnTheDate()
     {
         $utils = new DateTimeUtils();
         $date = new DateTime();
@@ -66,7 +65,7 @@ class TimeDateUtilsTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($dates, array($date));
     }
 
-    public function testGenerateDates_PositiveInterval_ReturnFourDates()
+    public function test_GenerateDateTimes_PositiveInterval_ReturnFourDates()
     {
         $utils = new DateTimeUtils();
         $from = new DateTime("20-1-1990");
@@ -75,7 +74,7 @@ class TimeDateUtilsTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($dates, array($from, new DateTime('21-1-1990'), new DateTime('22-1-1990') ,$to));
     }
 
-    public function testGenerateDates_SameDateEveryYear()
+    public function test_GenerateDateTimes_SameDateEveryYear()
     {
         $utils = new DateTimeUtils();
         $from = new DateTime('30-8-1970');

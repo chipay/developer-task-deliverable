@@ -9,7 +9,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 class DependencyInjectionContainerLoadTest extends \PHPUnit_Framework_TestCase
 {
 
-    public function testLoadContainerFromFile_AllServicesAreInstanciated()
+    public function test_LoadContainerFromFile_AllServicesAreInstanciated()
     {
         $container = new ContainerBuilder();
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../../../../app/config'));
