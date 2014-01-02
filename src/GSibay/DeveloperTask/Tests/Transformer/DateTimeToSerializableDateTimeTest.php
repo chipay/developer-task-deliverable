@@ -10,7 +10,7 @@ use \DateTimeZone as DateTimeZone;
 class DateTimeToSerializableDateTimeTest extends \PHPUnit_Framework_TestCase
 {
 
-    public function testTransformNowTimeDateDefaultTimeZone_EqualsCreateFromNowTimeDateDefaultTimeZone()
+    public function testTransform_NowDateTimeDefaultTimeZone_EqualsCreateFromNowDateTimeDefaultTimeZone()
     {
         $transformer = new DateTimeToSerializableDateTime();
         $now = new DateTime();
@@ -19,7 +19,7 @@ class DateTimeToSerializableDateTimeTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $transformed);
     }
 
-    public function testTransformNowTimeDatePST_EqualsCreateFromNowTimeDatePST()
+    public function testTransform_NowDateTimePST_EqualsCreateFromNowDateTimePST()
     {
         $transformer = new DateTimeToSerializableDateTime();
         $now = new DateTime();
@@ -31,7 +31,7 @@ class DateTimeToSerializableDateTimeTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $transformed);
     }
 
-    public function testTransformNowTimeDateGMT_EqualsCreateFromNowTimeDateGMT()
+    public function testTransform_NowDateTimeGMT_EqualsCreateFromNowDateTimeGMT()
     {
 
         $transformer = new DateTimeToSerializableDateTime();
@@ -44,7 +44,7 @@ class DateTimeToSerializableDateTimeTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $transformed);
     }
 
-    public function testTransformNowTimeDateGMT_NotEqualsCreateFromNowTimeDatePST()
+    public function testTransform_NowDateTimeGMT_NotEqualsCreateFromNowDateTimePST()
     {
         $transformer = new DateTimeToSerializableDateTime();
         $nowGMT = new DateTime();
@@ -58,7 +58,7 @@ class DateTimeToSerializableDateTimeTest extends \PHPUnit_Framework_TestCase
         $this->assertNotEquals($serializableDateTimePST, $transformed);
     }
 
-    public function testTransformNowTimeDatePST_NotEqualsCreateFromNowTimeDateGMT()
+    public function testTransform_NowDateTimePST_NotEqualsCreateFromNowDateTimeGMT()
     {
         $transformer = new DateTimeToSerializableDateTime();
         $nowPST = new DateTime();

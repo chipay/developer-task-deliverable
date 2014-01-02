@@ -15,9 +15,12 @@
 
     <services>
         <service id="date_time_utils" class="%date_time_utils.class%"/>
+        <service id="default_date_time_generator_service" class="GSibay\DeveloperTask\Service\DefaultDateTimeGeneratorService">
+        	<argument type="service" id="date_time_utils" />
+        </service>
         <service id="serializer" class="%serializer.class%"
         	factory-class="%serializer_builder.class%" factory-method="create" />
-        <service id="serializable_date_time_transformer_serializer" class="%transformer_serializer.class%">
+        <service id="date_times_to_serializable_date_time_container_transformer_serializer" class="%transformer_serializer.class%">
             <argument type="service" id="serializer" />
             <argument type="service" id="date_times_to_serializable_date_time_container" />
         </service>
@@ -26,7 +29,13 @@
         	<argument type="service" id="date_time_to_serializable_date_time" />
         </service>
 
-
+		<!-- Commands -->
+        <service id="generate_dates_command" class="GSibay\DeveloperTask\Command\GenerateDatesCommand" >
+        	<tag name="console.command" />
+        	<argument type="service" id="default_date_time_generator_service" />
+        	<argument type="service" id="date_times_to_serializable_date_time_container_transformer_serializer" />
+        </service>
+		
         <!-- service id="date_time_utils" class="%date_time_utils.class%"/-->
         <!--
         <service id="event_dispatcher" class="%event_dispatcher.class%">

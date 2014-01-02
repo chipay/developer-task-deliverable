@@ -29,11 +29,12 @@ $container = new ContainerBuilder();
 $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/config'));
 $loader->load('services.xml');
 
-$dateGeneratorService = new DefaultDateTimeGeneratorService(new DateTimeUtils());
+//$serializer = SerializerBuilder::create()->build();
+// the command services have the "console.command" tag. Find them and add them to the app.
+$commandServiceIds = $container->findTaggedServiceIds("console.command");
 
-$serializer = SerializerBuilder::create()->build();
+foreach ($commandServiceIds as $commandServiceId => $value) {
+    $console->add($container->get($commandServiceId));
+}
 
-$console->add(new GenerateDatesCommand($dateGeneratorService, $serializer));
-// TODO: ADD the other command
-//$console->add(new SortDatesExcludingPrimeYearsCommand());
 $console->run();

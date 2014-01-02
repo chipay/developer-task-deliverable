@@ -57,7 +57,6 @@ class GenerateDatesCommandTest extends \PHPUnit_Framework_TestCase
         unlink($outputFileName);
 
         $this->assertEquals('serializedData', $contentOfOutputFile);
-        // TODO test this as another test $this->assertEquals('File '.$outputFileName." generated\n", $commandTester->getDisplay(true));
     }
 
 }

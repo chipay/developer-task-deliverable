@@ -8,18 +8,28 @@ namespace GSibay\DeveloperTask\Transformer;
  * @author gsibay
  *
  */
+use GSibay\DeveloperTask\Serializer\Serializable\SerializableDateTimeContainer;
+
+/**
+ * Transforms an array of DateTime to a SerializableDateTimeContainer.
+ * The SerializableDateTimeContainer contains the same dates and in the same
+ * order but transformed to SerializableDateTime objects.
+ * 
+ * @author gsibay
+ *
+ */
 class DateTimesToSerializableDateTimeContainer extends AbstractTransformer
 {
 
     /**
-     * Transformer to transform TimeDate to a serializable object
+     * Transformer to transform DateTime to SerializableDateTime.
      * @var Transformer
      */
-    private $timeDateTransformer;
+    private $toSerializableDateTime;
 
-    public function __construct(Transformer $timeDateTransformer)
+    public function __construct(Transformer $dateTimeTransformer)
     {
-        $this->timeDateTransformer = $timeDateTransformer;
+        $this->toSerializableDateTime = $dateTimeTransformer;
     }
 
     /**
@@ -28,7 +38,9 @@ class DateTimesToSerializableDateTimeContainer extends AbstractTransformer
      */
     public function transform($anObject)
     {
-        return $transformedArray = array_map($this->getTransformAsCallable(), $anObject);
+        // transform DateTime[] to SerializableDateTime[]
+        $serializableDateTimeArray = array_map(array($this->toSerializableDateTime, 'transform'), $anObject);
+        return new SerializableDateTimeContainer($serializableDateTimeArray);
     }
 
 }
