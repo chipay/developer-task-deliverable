@@ -11,13 +11,27 @@
         <parameter key="serializer_builder.class">JMS\Serializer\SerializerBuilder</parameter>
         <parameter key="date_times_to_serializable_date_time_container.class">GSibay\DeveloperTask\Transformer\DateTimesToSerializableDateTimeContainer</parameter>
         <parameter key="date_time_to_serializable_date_time.class">GSibay\DeveloperTask\Transformer\DateTimeToSerializableDateTime</parameter>
+        <parameter key="is_year_composite_number.class">GSibay\DeveloperTask\Predicate\IsYearCompositeNumber</parameter>
+        <parameter key="natural_order_comparator.class">GSibay\DeveloperTask\Comparator\NaturalOrderComparator</parameter>
+        <parameter key="filter_and_sort_array_organizer_service.class">GSibay\DeveloperTask\Service\FilterAndSortArrayOrganizerService</parameter>
+        <parameter key="generate_dates_command.class">GSibay\DeveloperTask\Command\GenerateDatesCommand</parameter>
+        <parameter key="sort_dates_descending_excluding_prime_years_command.class">GSibay\DeveloperTask\Command\SortDatesDescendingExcludingPrimeYearsCommand</parameter>
+        <parameter key="chain_transformer.class">GSibay\DeveloperTask\Transformer\ChainTransformer</parameter>
+        <parameter key="date_time_to_different_time_and_timezone.class">GSibay\DeveloperTask\Transformer\DateTimeToDifferentTimeAndTimeZone</parameter>
     </parameters>
 
     <services>
-        <service id="date_time_utils" class="%date_time_utils.class%"/>
         <service id="default_date_time_generator_service" class="GSibay\DeveloperTask\Service\DefaultDateTimeGeneratorService">
         	<argument type="service" id="date_time_utils" />
         </service>
+
+        <service id="filter_composite_number_years_sort_dates_in_descendent_order_service" class="%filter_and_sort_array_organizer_service.class%">
+        	<argument type="service" id="is_year_composite_number" />
+        	<argument type="service" id="reverse_natural_order_comparator" />
+        </service>
+
+		<!-- Helpers  -->
+		<service id="date_time_utils" class="%date_time_utils.class%"/>
 
         <!-- Serializers -->
         <service id="serializer_builder" class="%serializer_builder.class%" factory-class="%serializer_builder.class%" factory-method="create" />
@@ -28,57 +42,58 @@
             <argument type="service" id="date_times_to_serializable_date_time_container" />
         </service>
 
+        <service id="date_times_to_serializable_date_time_1PM_PST_container_transformer_serializer" class="%transformer_serializer.class%">
+            <argument type="service" id="serializer" />
+            <argument type="service" id="date_times_to_serializable_date_time_1PM_PST_container" />
+        </service>
+
         <!-- Transformers -->
-        <service id="date_time_to_serializable_date_time" class="%date_time_to_serializable_date_time.class%" />
-        <service id="date_times_to_serializable_date_time_container" class="%date_times_to_serializable_date_time_container.class%">
+        	<!-- TimeDate ====> SerializableTimeDate -->
+	        <service id="date_time_to_serializable_date_time" class="%date_time_to_serializable_date_time.class%" />
+
+	        <!-- TimeDate[] ====> SerializableTimeDateContainer -->
+	        <service id="date_times_to_serializable_date_time_container" class="%date_times_to_serializable_date_time_container.class%">
+	        	<argument type="service" id="date_time_to_serializable_date_time" />
+	        </service>
+
+			<!-- TimeDate[] ====> TimeDate[] 1PM PST -->
+   	        <service id="date_time_to_1PM_PST_date_time" class="%date_time_to_different_time_and_timezone.class%">
+	        	<argument>PST</argument>
+	        	<argument>13</argument>
+	        	<argument>0</argument>
+	        	<argument>0</argument>
+	        </service>
+
+			<!-- chain transformer: TimeDate[] ====> TimeDate[] (1pm PST) ====> SerializableTimeDateContainer (1pm PST) -->
+			<service id="date_times_to_serializable_date_time_1PM_PST_container" class="chain_transformer.class"><!-- TODO -->
+	        	<argument id="date_time_to_1PM_PST_date_time" />
+	        	<argument id="date_time_to_serializable_date_time" />
+	        	 <!-- TODO COMO SE PPONE UNA COLLECTION? -->
+	        	<!-- write the class to transform to 1pm pst and add it to the transformer -->
+	        </service>
+
+        <service id="date_times_to_serializable_date_time_1PM_PST_container" class="%date_times_to_serializable_date_time_container.class%">
         	<argument type="service" id="date_time_to_serializable_date_time" />
+        </service>
+        <!-- Predicates -->
+        <service id="is_year_composite_number" class="%is_year_composite_number.class%" />
+
+        <!-- Comparators -->
+        <!-- service id="natural_order_comparator" class="%natural_order_comparator.class%" /-->
+        <service id="reverse_natural_order_comparator" class="%natural_order_comparator.class%" >
+        	<argument>false</argument>
         </service>
 
 		<!-- Commands -->
-        <service id="generate_dates_command" class="GSibay\DeveloperTask\Command\GenerateDatesCommand" >
+        <service id="generate_dates_command" class="%generate_dates_command.class%" >
         	<tag name="console.command" />
         	<argument type="service" id="default_date_time_generator_service" />
         	<argument type="service" id="date_times_to_serializable_date_time_container_transformer_serializer" />
         </service>
-
-        <!-- service id="date_time_utils" class="%date_time_utils.class%"/-->
-        <!--
-        <service id="event_dispatcher" class="%event_dispatcher.class%">
-            <argument type="service" id="service_container" />
+        <service id="sort_dates_descending_excluding_prime_years_command" class="%sort_dates_descending_excluding_prime_years_command.class%" >
+        	<tag name="console.command" />
+        	<argument type="service" id="filter_composite_number_years_sort_dates_in_descendent_order_service" />
+        	<argument type="service" id="date_times_to_serializable_date_time_1PM_PST_container_transformer_serializer" />
         </service>
-
-        <service id="http_kernel" class="%http_kernel.class%">
-            <argument type="service" id="event_dispatcher" />
-            <argument type="service" id="service_container" />
-            <argument type="service" id="controller_resolver" />
-            <argument type="service" id="request_stack" />
-        </service>
-
-        <service id="request_stack" class="%request_stack.class%" />
-
-        <service id="cache_warmer" class="%cache_warmer.class%">
-            <argument type="collection" />
-        </service>
-
-        <service id="cache_clearer" class="%cache_clearer.class%">
-            <argument type="collection" />
-        </service>
-
-        <service id="request" scope="request" synthetic="true" synchronized="true" />
-
-        <service id="service_container" synthetic="true" />
-
-        <service id="kernel" synthetic="true" />
-
-        <service id="filesystem" class="%filesystem.class%"></service>
-
-        <service id="file_locator" class="%file_locator.class%">
-            <argument type="service" id="kernel" />
-            <argument>%kernel.root_dir%/Resources</argument>
-        </service>
-
-        <service id="uri_signer" class="%uri_signer.class%">
-            <argument>%kernel.secret%</argument>
-        </service-->
     </services>
 </container>
