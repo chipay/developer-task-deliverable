@@ -138,9 +138,4 @@ class FilterAndSortArrayOrganiserServiceTest extends \PHPUnit_Framework_TestCase
         // use array_values on the returned array to reset the keys and compare to the expected object
         $this->assertEquals($expectedObject, array_values($this->createService($filter, $comparator)->organize($toBeOrganized)));
     }
-
-    public function test_incomplete()
-    {
-        $this->markTestIncomplete("Add tests with comparators");
-    }
 }
