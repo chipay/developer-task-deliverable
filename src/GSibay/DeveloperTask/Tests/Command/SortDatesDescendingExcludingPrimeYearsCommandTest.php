@@ -58,7 +58,7 @@ class SortDatesDescendingExcludingPrimeYearsCommandTest extends \PHPUnit_Framewo
         $inputFileName = __DIR__ . 'input.test';
         file_put_contents($inputFileName, 'dummy serialized data');
         $inputFileContent = file_get_contents($inputFileName);
-        
+
         // set dummy values for the objects returned by the mocks
         $outputFileName = __DIR__ . 'output.test';
         $dummyDeserializedArray = array('an object', 'another object', 'yet another one');
@@ -83,11 +83,11 @@ class SortDatesDescendingExcludingPrimeYearsCommandTest extends \PHPUnit_Framewo
 
         //read the file created by the command, then delete the files created for this test and finally check the result is as expected
         $contentOfOutputFile = file_get_contents($outputFileName);
-        
+
         //remove the files created by the test
         unlink($outputFileName);
         unlink($inputFileName);
-        
+
         $this->assertEquals($contentOfOutputFile, $organizedAndSerializedData);
     }
 

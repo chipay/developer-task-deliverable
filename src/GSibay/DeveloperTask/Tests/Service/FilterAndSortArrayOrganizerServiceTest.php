@@ -84,7 +84,7 @@ class FilterAndSortArrayOrganiserServiceTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expectedObject, array_values($this->createService($filter)->organize($toBeOrganized)));
     }
 
-    public function test_Organize_NoFilterAndComparatorOnThreeNumberElements_AppliesFilterOnArray()
+    public function test_Organize_NoFilterAndComparatorOnThreeNumberElements_ReturnsSortedOnArray()
     {
         //$this->test_incomplete();
         $toBeOrganized = array(24, 35, 17);
@@ -97,9 +97,25 @@ class FilterAndSortArrayOrganiserServiceTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expectedObject, array_values($this->createService(null, $comparator)->organize($toBeOrganized)));
     }
 
-    public function test_Organize_FilterAndNoComparatorOnFiveDateTimeElements_AppliesFilterOnArray()
+    public function test_Organize_NoFilterAndComparatorOnFourDateTimeElements_ReturnsSortedArray()
     {
-        $this->markTestIncomplete("Test failed. TODO");
+        $date1 = DateTime::createFromFormat('d-m-Y', '11-08-2001', new DateTimeZone('PST'));
+        $date2 = DateTime::createFromFormat('d-m-Y', '11-08-2000', new DateTimeZone('GMT'));
+        $date3 = DateTime::createFromFormat('d-m-Y', '8-9-1976', new DateTimeZone('America/Argentina/Ushuaia'));
+        $date4 = DateTime::createFromFormat('d-m-Y', '8-9-1979', new DateTimeZone('America/Argentina/Ushuaia'));
+
+        $toBeOrganized = array($date1, $date2, $date3, $date4);
+
+        $comparator = $this->getNaturalComparator();
+
+        $expectedObject = array($date3, $date4, $date2, $date1);
+
+        // use array_values on the returned array to reset the keys and compare to the expected object
+        $this->assertEquals($expectedObject, array_values($this->createService(null, $comparator)->organize($toBeOrganized)));
+    }
+
+    public function test_Organize_FilterAndNoComparatorOnFiveDateTimeElements_ReturnsFilteredAndSortedArray()
+    {
         $date1 = DateTime::createFromFormat('d-m-Y', '11-08-2001', new DateTimeZone('PST'));
         $date2 = DateTime::createFromFormat('d-m-Y', '11-08-2000', new DateTimeZone('GMT'));
         $date3 = DateTime::createFromFormat('d-m-Y', '8-9-1976', new DateTimeZone('America/Argentina/Ushuaia'));
@@ -108,7 +124,7 @@ class FilterAndSortArrayOrganiserServiceTest extends \PHPUnit_Framework_TestCase
 
         $toBeOrganized = array($date1, $date2, $date3, $date4, $date5);
 
-        $filter = M::mock('GSibay\DeveloperTask\Prediate\Predicate');
+        $filter = M::mock('GSibay\DeveloperTask\Predicate\Predicate');
         $filter->shouldReceive('evaluate')->with($date1)->once()->ordered()->andReturn(false);
         $filter->shouldReceive('evaluate')->with($date2)->once()->ordered()->andReturn(true);
         $filter->shouldReceive('evaluate')->with($date3)->once()->ordered()->andReturn(true);
@@ -127,5 +143,4 @@ class FilterAndSortArrayOrganiserServiceTest extends \PHPUnit_Framework_TestCase
     {
         $this->markTestIncomplete("Add tests with comparators");
     }
-
 }
