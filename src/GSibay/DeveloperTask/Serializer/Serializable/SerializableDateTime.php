@@ -45,4 +45,10 @@ class SerializableDateTime
     {
        $this->date = $date;
     }
+
+    public function getDate()
+    {
+        return $this->date;
+    }
+
 }

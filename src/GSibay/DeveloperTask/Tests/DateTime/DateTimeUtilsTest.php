@@ -9,10 +9,10 @@ use \DateTimeZone as DateTimeZone;
 class DateTimeUtilsTest extends \PHPUnit_Framework_TestCase
 {
 
-    public function test_GetUnixEpopch1PMGMT_TimestampEqualsConstant()
+    public function test_GetUnixEpopch1PMGMT_TimestampEqualsUnixEpoch1PMTimestamp()
     {
         $utils = new DateTimeUtils();
-        $this->assertEquals($utils->getUnixEpoch1PMGMT()->getTimestamp(), DateTimeUtils::UNIX_EPOCH_1PM_GMT);
+        $this->assertEquals($utils->getUnixEpoch1PMGMT()->getTimestamp(), 46800);
     }
 
     public function test_GetDateTimeZoneGMT_IsDateTimeZoneGMT()

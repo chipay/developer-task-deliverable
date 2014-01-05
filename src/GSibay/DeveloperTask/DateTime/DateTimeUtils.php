@@ -13,12 +13,10 @@ use \DateTimeZone as DateTimeZone;
  */
 class DateTimeUtils
 {
-    // Thu, 01 Jan 1970 13:00:00 GMT Unix epoch timestamp
-    const UNIX_EPOCH_1PM_GMT = '46800';
 
     /**
      * Unix epoch at 1PM GMT (Thu, 01 Jan 1970 13:00:00 GMT)
-     * @var
+     * @var \DateTime
      */
     private $unixEpoch1PMGMT;
 
@@ -42,7 +40,7 @@ class DateTimeUtils
     public function getUnixEpoch1PMGMT()
     {
         if ($this->unixEpoch1PMGMT == null) {
-            $this->unixEpoch1PMGMT = DateTimeImmutable::createFromFormat('U', DateTimeUtils::UNIX_EPOCH_1PM_GMT);
+            $this->unixEpoch1PMGMT = DateTime::createFromFormat('d-m-Y H:i:s', '01-01-1970 13:00:00', $this->getdateTimeZoneGMT());
         }
 
         return $this->unixEpoch1PMGMT;

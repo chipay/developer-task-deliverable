@@ -6,6 +6,7 @@ use GSibay\DeveloperTask\DateTime\DateTimeUtils;
 use GSibay\DeveloperTask\Service\DefaultDateTimeGeneratorService;
 use GSibay\DeveloperTask\Service\DateTimeGeneratorService;
 use \DateTimeZone as DateTimeZone;
+use \DateTime as DateTime;
 
 class DefaultDateTimeGeneratorServiceTest extends \PHPUnit_Framework_TestCase
 {
@@ -45,28 +46,27 @@ class DefaultDateTimeGeneratorServiceTest extends \PHPUnit_Framework_TestCase
 
     public function testGenerateDateTimesFromEpoch_Until30_6_1970_1PMGMT_ReturnOneDate()
     {
-        //TODO: use factory method \DateTime::createFromFormat('Y-m-d H:i:s', '1970-06-30 13:00:00', new DateTimeZone('GMT'));
-        $date30_6_70_1PM_GMT = \DateTime::createFromFormat('U', gmmktime(13, 0, 0, 6, 30, 1970));
+        $date30_6_70_1PM_GMT = DateTime::createFromFormat('d-m-Y H:i:s', '30-06-1970 13:00:00', new DateTimeZone('GMT'));
         $expected = array($date30_6_70_1PM_GMT);
         $this->assertEquals($expected, $this->generateDateTimes($date30_6_70_1PM_GMT));
     }
 
     public function testGenerateDateTimesFromEpoch_Until30_6_1971_1PMGMT_ReturnTwoDates()
     {
-        $date30_6_71_1PM_GMT = \DateTime::createFromFormat('U', gmmktime(13, 0, 0, 6, 30, 1971));
-        $date30_6_70_1PM_GMT = \DateTime::createFromFormat('U', gmmktime(13, 0, 0, 6, 30, 1970));
+        $date30_6_71_1PM_GMT = DateTime::createFromFormat('d-m-Y H:i:s', '30-06-1971 13:00:00', new DateTimeZone('GMT'));
+        $date30_6_70_1PM_GMT = DateTime::createFromFormat('d-m-Y H:i:s', '30-06-1970 13:00:00', new DateTimeZone('GMT'));
 
         $expected = array($date30_6_70_1PM_GMT, $date30_6_71_1PM_GMT);
         $this->assertEquals($expected, $this->generateDateTimes($date30_6_71_1PM_GMT));
     }
 
-    public function testGenerateDateTimesFromEpoch_Until20_1_1973_6PMGMT_UseOtherTimezone_ReturnThreeDates()
+    public function testGenerateDateTimesFromEpoch_Until20_1_1973_6PMPST_ReturnThreeDates()
     {
-        $date30_6_71_1PM_GMT = \DateTime::createFromFormat('U', gmmktime(13, 0, 0, 6, 30, 1971));
-        $date30_6_70_1PM_GMT = \DateTime::createFromFormat('U', gmmktime(13, 0, 0, 6, 30, 1970));
-        $date30_6_72_1PM_GMT = \DateTime::createFromFormat('U', gmmktime(13, 0, 0, 6, 30, 1972));
+        $date30_6_71_1PM_GMT = DateTime::createFromFormat('d-m-Y H:i:s', '30-06-1971 13:00:00', new DateTimeZone('GMT'));
+        $date30_6_70_1PM_GMT = DateTime::createFromFormat('d-m-Y H:i:s', '30-06-1970 13:00:00', new DateTimeZone('GMT'));
+        $date30_6_72_1PM_GMT = DateTime::createFromFormat('d-m-Y H:i:s', '30-06-1972 13:00:00', new DateTimeZone('GMT'));
 
-        $until = \DateTime::createFromFormat('U', gmmktime(18, 0, 0, 1, 20, 1973));
+        $until = DateTime::createFromFormat('d-m-Y H:i:s', '20-01-1973 18:00:00', new DateTimeZone('GMT'));
         $until->setTimeZone(new DateTimeZone('PST'));
 
         $expected = array($date30_6_70_1PM_GMT, $date30_6_71_1PM_GMT, $date30_6_72_1PM_GMT);

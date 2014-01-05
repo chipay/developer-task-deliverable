@@ -47,8 +47,8 @@ class DefaultDateTimeGeneratorService implements DateTimeGeneratorService
     {
         if ($this->date30_6_1970_1PMGMT == null) {
             $unixEpoch_1PM_GMT = $this->getDateTimeUtils()->getUnixEpoch1PMGMT();
-            $this->date30_6_1970_1PMGMT =
-                \DateTime::createFromFormat('U', $unixEpoch_1PM_GMT->modify('+29 day +5 month')->getTimestamp());
+            $this->date30_6_1970_1PMGMT = $unixEpoch_1PM_GMT->modify('+29 day +5 month');
+//                \DateTime::createFromFormat('U', $unixEpoch_1PM_GMT->modify('+29 day +5 month')->getTimestamp());
         }
 
         return $this->date30_6_1970_1PMGMT;

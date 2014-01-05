@@ -9,7 +9,7 @@ use Symfony\Component\Console\Command\Command;
 use JMS\Serializer\SerializerInterface;
 use GSibay\DeveloperTask\Service\DateTimeGeneratorService;
 use \DateTime as DateTime;
-
+use \DateTimeZone as DateTimeZone;
 /**
  * This command generates dates
  * generates an XML file containing every 30th of June since
@@ -85,7 +85,7 @@ EOD
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         // create the dates, serialize them
-        $generatedDates = $this->dateGeneratorService->generateDateTimesFromEpoch(new DateTime());
+        $generatedDates = $this->dateGeneratorService->generateDateTimesFromEpoch(new DateTime("now"), new DateTimeZone('GMT'));
         $serializedDates = $this->serializer->serialize($generatedDates, $this->serializeFormat);
 
         // write the serialized dates to the output file

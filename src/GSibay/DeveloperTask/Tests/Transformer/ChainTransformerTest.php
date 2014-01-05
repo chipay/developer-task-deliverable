@@ -34,9 +34,9 @@ class ChainTransformerTest extends \PHPUnit_Framework_TestCase
     public function test_Transform_ThreeTransformer_AllTransformersCalledInChain()
     {
         $objectToTransform = new DateTime();
-        $objectAfterFirstTransformation = new DateTime('20-10-1990');
-        $objectAfterSecondTransformation = new DateTime('10-10-1998');
-        $objectAfterThirdTransformation = new DateTime('1-1-1970');
+        $objectAfterFirstTransformation = M::mock('\DateTime');
+        $objectAfterSecondTransformation = M::mock('\DateTime');
+        $objectAfterThirdTransformation = M::mock('\DateTime');
 
         $firstTransformer = M::mock('GSibay\DeveloperTask\Transformer\Transformer');
         $firstTransformer->shouldReceive('transform')->with($objectToTransform)->once()->ordered()->andReturn($objectAfterFirstTransformation);

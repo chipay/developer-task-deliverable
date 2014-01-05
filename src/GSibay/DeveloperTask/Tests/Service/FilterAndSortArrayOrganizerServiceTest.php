@@ -34,7 +34,7 @@ class FilterAndSortArrayOrganiserServiceTest extends \PHPUnit_Framework_TestCase
     private function getNaturalComparator()
     {
         //XXX: mock comparator can not be used because usort (used by the service under test) throws a warning that makes th
-        // test fail. An order had to be provided in the mock object anyway. However this is not ideal.
+        // test fail. It would be ideal to provide a mock comparator.
         return new NaturalOrderComparator();
     }
 
@@ -86,7 +86,6 @@ class FilterAndSortArrayOrganiserServiceTest extends \PHPUnit_Framework_TestCase
 
     public function test_Organize_NoFilterAndComparatorOnThreeNumberElements_ReturnsSortedOnArray()
     {
-        //$this->test_incomplete();
         $toBeOrganized = array(24, 35, 17);
 
         $comparator = $this->getNaturalComparator();

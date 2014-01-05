@@ -4,6 +4,7 @@ namespace GSibay\DeveloperTask\Tests\Comparator;
 
 use GSibay\DeveloperTask\Comparator\NaturalOrderComparator;
 use \DateTime as DateTime;
+use \DateTimeZone as DateTimeZone;
 
 class NaturalOrderComparatorTest extends \PHPUnit_Framework_TestCase
 {
@@ -55,12 +56,12 @@ class NaturalOrderComparatorTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->ascendingComparator->compareTo(33, -198) > 0);
 
         $this->assertTrue($this->ascendingComparator->compareTo(
-                \DateTime::createFromFormat('d-m-Y', '21-10-1980'),
-                \DateTime::createFromFormat('d-m-Y', '11-09-1970')) > 0);
+                \DateTime::createFromFormat('d-m-Y', '21-10-1980', new DateTimeZone('GMT')),
+                \DateTime::createFromFormat('d-m-Y', '11-09-1970', new DateTimeZone('GMT'))) > 0);
 
         $this->assertTrue($this->ascendingComparator->compareTo(
-                \DateTime::createFromFormat('d-m-Y', '1-1-1980'),
-                \DateTime::createFromFormat('d-m-Y', '31-12-1979')) > 0);
+                \DateTime::createFromFormat('d-m-Y', '1-1-1980', new DateTimeZone('GMT')),
+                \DateTime::createFromFormat('d-m-Y', '31-12-1979', new DateTimeZone('GMT'))) > 0);
     }
 
     public function testCompareDescending_FirstBiggerThanSecond_ReturnsNegative()
@@ -70,12 +71,12 @@ class NaturalOrderComparatorTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->descendingComparator->compareTo(12, -12) < 0);
 
         $this->assertTrue($this->descendingComparator->compareTo(
-                \DateTime::createFromFormat('d-m-Y', '11-09-2020'),
-                \DateTime::createFromFormat('d-m-Y', '11-11-2001')) < 0);
+                \DateTime::createFromFormat('d-m-Y', '11-09-2020', new DateTimeZone('GMT')),
+                \DateTime::createFromFormat('d-m-Y', '11-11-2001', new DateTimeZone('GMT'))) < 0);
 
         $this->assertTrue($this->descendingComparator->compareTo(
-                \DateTime::createFromFormat('d-m-Y', '31-12-2000'),
-                \DateTime::createFromFormat('d-m-Y', '1-1-1986')) < 0);
+                \DateTime::createFromFormat('d-m-Y', '31-12-2000', new DateTimeZone('GMT')),
+                \DateTime::createFromFormat('d-m-Y', '1-1-1986', new DateTimeZone('GMT'))) < 0);
     }
 
     public function testCompareAscending_FirstSmallerThanSecond_ReturnsNegative()
@@ -85,12 +86,12 @@ class NaturalOrderComparatorTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->ascendingComparator->compareTo(-55, 28997) < 0);
 
         $this->assertTrue($this->ascendingComparator->compareTo(
-                \DateTime::createFromFormat('d-m-Y', '01-01-1980'),
-                \DateTime::createFromFormat('d-m-Y', '01-01-1981')) < 0);
+                \DateTime::createFromFormat('d-m-Y', '01-01-1980', new DateTimeZone('GMT')),
+                \DateTime::createFromFormat('d-m-Y', '01-01-1981', new DateTimeZone('GMT'))) < 0);
 
         $this->assertTrue($this->ascendingComparator->compareTo(
-                \DateTime::createFromFormat('d-m-Y', '1-1-1980'),
-                \DateTime::createFromFormat('d-m-Y', '31-12-1989')) < 0);
+                \DateTime::createFromFormat('d-m-Y', '1-1-1980', new DateTimeZone('GMT')),
+                \DateTime::createFromFormat('d-m-Y', '31-12-1989', new DateTimeZone('GMT'))) < 0);
 
     }
 
@@ -101,12 +102,12 @@ class NaturalOrderComparatorTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->descendingComparator->compareTo(-55, 28997) > 0);
 
         $this->assertTrue($this->descendingComparator->compareTo(
-                \DateTime::createFromFormat('d-m-Y', '12-12-2000'),
-                \DateTime::createFromFormat('d-m-Y', '01-01-2010')) > 0);
+                \DateTime::createFromFormat('d-m-Y', '12-12-2000', new DateTimeZone('GMT')),
+                \DateTime::createFromFormat('d-m-Y', '01-01-2010', new DateTimeZone('GMT'))) > 0);
 
         $this->assertTrue($this->descendingComparator->compareTo(
-                \DateTime::createFromFormat('d-m-Y', '1-1-1985'),
-                \DateTime::createFromFormat('d-m-Y', '31-12-1999')) > 0);
+                \DateTime::createFromFormat('d-m-Y', '1-1-1985', new DateTimeZone('GMT')),
+                \DateTime::createFromFormat('d-m-Y', '31-12-1999', new DateTimeZone('GMT'))) > 0);
     }
 
 }

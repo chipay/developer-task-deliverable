@@ -15,8 +15,7 @@ class DateTimeToSerializableDateTimeTest extends \PHPUnit_Framework_TestCase
         $transformer = new DateTimeToSerializableDateTime();
         $now = new DateTime();
         $transformed = $transformer->transform($now);
-        $expected = new SerializableDateTime($now);
-        $this->assertEquals($expected, $transformed);
+        $this->assertEquals($now, $transformed->getDate());
     }
 
     public function test_Transform_NowDateTimePST_EqualsCreateFromNowDateTimePST()
@@ -26,9 +25,8 @@ class DateTimeToSerializableDateTimeTest extends \PHPUnit_Framework_TestCase
         $now->setTimezone(new DateTimeZone('PST'));
 
         $transformed = $transformer->transform($now);
-        $expected = new SerializableDateTime($now);
 
-        $this->assertEquals($expected, $transformed);
+        $this->assertEquals($now, $transformed->getDate());
     }
 
     public function test_Transform_NowDateTimeGMT_EqualsCreateFromNowDateTimeGMT()
@@ -39,9 +37,8 @@ class DateTimeToSerializableDateTimeTest extends \PHPUnit_Framework_TestCase
         $now->setTimezone(new DateTimeZone('GMT'));
 
         $transformed = $transformer->transform($now);
-        $expected = new SerializableDateTime($now);
 
-        $this->assertEquals($expected, $transformed);
+        $this->assertEquals($now, $transformed->getDate());
     }
 
     public function test_Transform_NowDateTimeGMT_NotEqualsCreateFromNowDateTimePST()
@@ -54,8 +51,7 @@ class DateTimeToSerializableDateTimeTest extends \PHPUnit_Framework_TestCase
         $nowPST->setTimezone(new DateTimeZone('PST'));
 
         $transformed = $transformer->transform($nowGMT);
-        $serializableDateTimePST = new SerializableDateTime($nowPST);
-        $this->assertNotEquals($serializableDateTimePST, $transformed);
+        $this->assertNotEquals($nowPST, $transformed->getDate());
     }
 
     public function test_Transform_NowDateTimePST_NotEqualsCreateFromNowDateTimeGMT()
@@ -69,7 +65,7 @@ class DateTimeToSerializableDateTimeTest extends \PHPUnit_Framework_TestCase
 
         $transformed = $transformer->transform($nowPST);
         $serializableDateTimeGMT = new SerializableDateTime($nowGMT);
-        $this->assertNotEquals($serializableDateTimeGMT, $transformed);
+        $this->assertNotEquals($nowGMT, $transformed->getDate());
     }
 
 }
