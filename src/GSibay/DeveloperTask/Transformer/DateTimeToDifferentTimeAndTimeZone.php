@@ -5,7 +5,8 @@ namespace GSibay\DeveloperTask\Transformer;
 use \DateTimeZone as DateTimeZone;
 
 /**
- * TODO
+ * Converts the date into the desired TimeZone and then
+ * changes the time to the provided hour, minutes, and seconds.
  * @author gsibay
  *
  */
@@ -52,20 +53,13 @@ class DateTimeToDifferentTimeAndTimeZone extends AbstractTransformer
      * (non-PHPdoc)
      * @see GSibay\DeveloperTask\Transformer.Transformer::transform()
      */
-    public function transform($anObject)
+    public function transform($date)
     {
-        //TODO: code
-        return null;
+        $transformedDate = clone $date;
+        $transformedDate->setTimezone($this->timezone);
+        $transformedDate->setTime($this->hour, $this->minutes, $this->seconds);
 
-        /**
-$newDate->setTimezone($timeZonePST);
-var_dump('unix time date 30-6-2009 en PST: ');
-var_dump($newDate->format('Y-m-d H:i:s e - U'));
-var_dump('offset: '.$newDate->getOffset());
-
-//LISTO, ASI LA MODIFICO
-var_dump('modifico para que este a las 13 (en PST)');
-$newDate->setTime(13, 0, 0);
-         */
+        return $transformedDate;
     }
+
 }
