@@ -139,20 +139,20 @@ class TransformerSerializerTest extends \PHPUnit_Framework_TestCase
         $serializedData = \DateTime::createFromFormat('d-m-Y', '22-10-1980', new DateTimeZone('GMT'));
         $dataDeserializedByMock = 'This is the dummy object returned by the mocked serializer';
         $transformedDeserializedData = 'The transformed serialized data';
-    
+
         $format = 'xml';
         $type = 'string';
         $context = M::mock('JMS\Serializer\DeserializationContext');
-    
+
         $mockedSerializer = M::mock('JMS\Serializer\SerializerInterface');
-    
+
         $mockedPostDeserializationTransformer = M::mock('GSibay\DeveloperTask\Transformer\Transformer');
-    
+
         $transformerSerializer = new TransformerSerializer($mockedSerializer, null, $mockedPostDeserializationTransformer);
-    
+
         $transformerSerializer->deserialize($serializedData, $type, $format, $context);
     }
-    
+
     public function test_Serialize_TransformersForBothDirectionsAndSameType_ObjectTransformedAndSerialized()
     {
         $data = 'This is an object that will be transformed and then serialized';

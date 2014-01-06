@@ -23,7 +23,7 @@
     </parameters>
 
     <services>
-    
+
         <service id="default_date_time_generator_service" class="GSibay\DeveloperTask\Service\DefaultDateTimeGeneratorService">
         	<argument type="service" id="date_time_utils" />
         </service>
@@ -58,7 +58,7 @@
 		            <argument type="service" id="serializer" />
 		            <argument type="service" id="date_times_to_serializable_date_time_container" />
 		        </service>
-	
+
 				<!-- serializes a DateTime[] by first converting into SerializableDateTimeContainer at 1PM PST -->
 				<!-- deserializes a SerializableDateTimeContainer and then transforms it to DateTime[] -->
 		        <service id="serializable_date_time_1PM_PST_container_transformer_serializer" class="%transformer_serializer.class%">
@@ -69,14 +69,14 @@
 		        </service>
 
         <!-- Transformers -->
-        	
+
         	<!-- TimeDate[] ====> SerializableDateTime[] -->
         	<service id="date_times_to_serializable_date_times" class="%array_transformer.class%" >
 	        	<argument type="service" id="date_time_to_serializable_date_time"/>
 	        </service>
 	        <!-- TimeDate ====> SerializableDateTime -->
 	        <service id="date_time_to_serializable_date_time" class="%date_time_to_serializable_date_time.class%" />
-	        
+
 
 	        <!-- TimeDate[] ====> SerializableDateTimeContainer -->
 	        <service id="date_times_to_serializable_date_time_container" class="%date_times_to_serializable_date_time_container.class%">
@@ -86,7 +86,7 @@
 			<!-- SerializableDateTimeContainer ==> TimeDate[] -->
 	        <service id="serializable_date_time_container_to_date_times" class="%serializable_date_time_container_to_date_time_.class%">
 	        </service>
-	        
+
 			<!-- DateTime[] ====> DateTime[] 1PM PST -->
 			<service id="date_times_to_1PM_PST_date_times" class="%array_transformer.class%">
 	        	<argument type="service" id="date_time_to_1PM_PST_date_time"/>
@@ -106,7 +106,7 @@
 	        		<argument id="date_times_to_serializable_date_time_container" type="service" />
 	        	</argument>
 	        </service>
-			
+
         <!-- Predicates -->
 	        <service id="is_year_composite_number" class="%is_year_composite_number.class%" />
 

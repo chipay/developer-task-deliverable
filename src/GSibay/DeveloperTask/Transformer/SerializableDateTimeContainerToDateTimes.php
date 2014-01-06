@@ -22,8 +22,7 @@ class SerializableDateTimeContainerToDateTimes implements Transformer
     public function transform($serializableDateTimeContainer)
     {
         return $serializableDateTimeArray = array_map(
-                function($serializableDateTime) 
-                {
+                function ($serializableDateTime) {
                     return clone $serializableDateTime->getDate();
                 }, $serializableDateTimeContainer->getDates());
     }
