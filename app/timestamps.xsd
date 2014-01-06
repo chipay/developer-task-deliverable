@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsd:schema attributeFormDefault="unqualified" elementFormDefault="qualified" version="1.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <xsd:element name="timestamps">
-    <xsd:complexType>
-      <xsd:sequence>
-        <xsd:element maxOccurs="unbounded" name="timestamp">
-          <xsd:complexType>
-            <xsd:attribute name="time" type="xsd:int" />
-            <xsd:attribute name="text" type="xsd:string" />
-          </xsd:complexType>
-        </xsd:element>
-      </xsd:sequence>
-    </xsd:complexType>
-  </xsd:element>
+    <xsd:element name="timestamps" >
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element minOccurs="0" maxOccurs="unbounded" name="timestamp">
+                    <xsd:complexType>
+                        <xsd:attribute name="time" type="xsd:int"/>
+                        <xsd:attribute name="text" type="xsd:string"/>
+                    </xsd:complexType>
+                </xsd:element>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
 </xsd:schema>

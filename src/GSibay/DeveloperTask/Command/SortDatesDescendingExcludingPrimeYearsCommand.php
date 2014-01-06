@@ -4,6 +4,7 @@ namespace GSibay\DeveloperTask\Command;
 
 use Symfony\Component\Console\Input\InputArgument;
 use GSibay\DeveloperTask\Service\ArrayOrganizerService;
+use GSibay\DeveloperTask\Validator\Validator;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Command\Command;
@@ -12,8 +13,8 @@ use \DOMDocument as DOMDocument;
 
 /**
  * Command to parse a file into an array and
- * organize it (sort and filter). The result
- * is serialized and stored in the output file.
+ * organize it (using sort and filter). The result
+ * is serialized and saved to the output file.
  *
  * @author gsibay
  *
@@ -25,7 +26,7 @@ class SortDatesDescendingExcludingPrimeYearsCommand extends Command
     const INPUT_FILE_NAME_ARG = 'input-file-name';
 
     /**
-     * The serializer to serialize and deserialize the dates
+     * The serializer to serialize and deserialize the dates$this->inputValidator->validate($inputStr)
      * @var JMS\Serializer\SerializerInterface
      */
     private $serializer;
@@ -44,10 +45,10 @@ class SortDatesDescendingExcludingPrimeYearsCommand extends Command
     private $serializeFormat;
 
     /**
-     * The file containing the schema to validate the xml input
-     * @var string
+     * A validator for the input
+     * @var Validator
      */
-    private $schemaForValidationFileName;
+    private $inputValidator;
     
     /**
      * 
@@ -57,23 +58,19 @@ class SortDatesDescendingExcludingPrimeYearsCommand extends Command
      * @param string $schemaForValidationFileName
      * @throws \RuntimeException
      */
-    public function __construct(ArrayOrganizerService $arrayOrganizerService, SerializerInterface $serializer, $schemaForValidationFileName = null, $serializeFormat = 'xml')
+    public function __construct(ArrayOrganizerService $arrayOrganizerService, SerializerInterface $serializer, $validator = null, $serializeFormat = 'xml')
     {
         parent::__construct();
         $this->serializer = $serializer;
         $this->arrayOrganizerService = $arrayOrganizerService;
-        $this->serializeFormat = 'xml';
-        $this->schemaForValidationFileName = $schemaForValidationFileName;
+        $this->inputValidator = $validator;
+        $this->serializeFormat = $serializeFormat;
     }
 
-    private function validateXMLFile($xmlStr)
+    private function validateInput($inputStr)
     {
-        if($this->schemaForValidationFileName !== null) {
-            $xml= new DOMDocument();
-            $xml->loadXML($xmlStr, LIBXML_NOBLANKS);
-            if(!$xml->schemaValidate($this->schemaForValidationFileName)) {
-                throw new \RuntimeException("Input file is not valid according to schema " . $this->schemaForValidationFileName); 
-            }
+        if($this->inputValidator !== null && !$this->inputValidator->validate($inputStr)) {
+            throw new \RuntimeException("Input file is not valid."); 
         }
     }
     
@@ -105,8 +102,7 @@ class SortDatesDescendingExcludingPrimeYearsCommand extends Command
             throw new \RuntimeException('Could not read input file: '.$input->getArgument(self::INPUT_FILE_NAME_ARG));
         }
 
-        // validate the xml
-        $this->validateXMLFile($fileContent); 
+        $this->validateInput($fileContent); 
         
         $dates = $this->serializer->deserialize($fileContent, 'array', $this->serializeFormat);
 

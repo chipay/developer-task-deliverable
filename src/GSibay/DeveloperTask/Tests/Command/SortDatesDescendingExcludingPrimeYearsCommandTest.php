@@ -91,4 +91,48 @@ class SortDatesDescendingExcludingPrimeYearsCommandTest extends \PHPUnit_Framewo
         $this->assertEquals($contentOfOutputFile, $organizedAndSerializedData);
     }
 
+    /**
+     * @expectedException        \RuntimeException
+     * @expectedExceptionMessage Input file is not valid.
+     */
+    public function testCommand_BothArgumentsProvidedValidatorSetAndInvalidInput_RuntimeExceptionExpected()
+    {
+        $this->markTestIncomplete();
+        // initialize the input file for the test
+        $inputFileName = __DIR__ . 'input.test';
+        file_put_contents($inputFileName, 'dummy serialized data');
+        $inputFileContent = file_get_contents($inputFileName);
+    
+        // set dummy values for the objects returned by the mocks
+        $outputFileName = __DIR__ . 'output.test';
+        $dummyDeserializedArray = array('an object', 'another object', 'yet another one');
+        $organizedArray = array('this', 'array', 'is', 'organized');
+        $organizedAndSerializedData = 'This is the final product after organization and serialization';
+    
+        // get mocks
+        $mockedArrayOrganizerService = M::mock('GSibay\DeveloperTask\Service\ArrayOrganizerService');
+        $mockedSerializer = M::mock('JMS\Serializer\SerializerInterface');
+        $mockedValidator = M::mock('GSibay\DeveloperTask\Validator\Validator');
+    
+        $mockedValidator->shouldReceive('validate')->once()->with($inputFileContent)->ordered()->andReturn(false);
+        
+        
+        // Set the application with the command tester and execute it
+        $application = new Application();
+        $application->add(new SortDatesDescendingExcludingPrimeYearsCommand($mockedArrayOrganizerService, $mockedSerializer));
+        $command = $application->find(SortDatesDescendingExcludingPrimeYearsCommand::COMMAND_NAME);
+        $commandTester = new CommandTester($command);
+        $commandTester->execute(array('command' => $command->getName(), SortDatesDescendingExcludingPrimeYearsCommand::INPUT_FILE_NAME_ARG => $inputFileName,
+                SortDatesDescendingExcludingPrimeYearsCommand::OUTPUT_FILE_NAME_ARG => $outputFileName));
+    
+        //read the file created by the command, then delete the files created for this test and finally check the result is as expected
+        //$contentOfOutputFile = file_get_contents($outputFileName);
+    
+        //remove the files created by the test
+        unlink($outputFileName);
+        unlink($inputFileName);
+    
+        $this->assertEquals($contentOfOutputFile, $organizedAndSerializedData);
+    }
+    
 }

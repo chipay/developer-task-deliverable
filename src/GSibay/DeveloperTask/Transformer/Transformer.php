@@ -2,6 +2,11 @@
 
 namespace GSibay\DeveloperTask\Transformer;
 
+/**
+ * Transforms an object into another object
+ * @author gsibay
+ *
+ */
 interface Transformer
 {
     /**

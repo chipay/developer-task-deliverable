@@ -20,6 +20,7 @@
         <parameter key="date_time_to_different_time_and_timezone.class">GSibay\DeveloperTask\Transformer\DateTimeToDifferentTimeAndTimeZone</parameter>
         <parameter key="serializable_date_time_container_to_date_time_.class">GSibay\DeveloperTask\Transformer\SerializableDateTimeContainerToDateTimes</parameter>
         <parameter key="array_transformer.class">GSibay\DeveloperTask\Transformer\ArrayTransformer</parameter>
+        <parameter key="xml_xchema_validator.class">GSibay\DeveloperTask\Validator\XMLSchemaValidator</parameter>
     </parameters>
 
     <services>
@@ -43,7 +44,7 @@
 	        	<tag name="console.command" />
 	        	<argument type="service" id="filter_composite_number_years_sort_dates_in_descendent_order_service" />
 	        	<argument type="service" id="serializable_date_time_1PM_PST_container_transformer_serializer" />
-	        	<argument>timestamps.xsd</argument>
+	        	<argument type="service" id="xml_schema_validator"/>
 	        </service>
 
 		<!-- Helpers  -->
@@ -114,6 +115,11 @@
         <!-- Comparators -->
 	        <service id="reverse_natural_order_comparator" class="%natural_order_comparator.class%" >
 	        	<argument>false</argument>
+	        </service>
+	        
+	    <!-- Validators -->
+	    	<service id="xml_schema_validator" class="%xml_xchema_validator.class%" >
+	        	<argument>timestamps.xsd </argument>
 	        </service>
     </services>
 </container>
