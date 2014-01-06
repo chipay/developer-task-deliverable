@@ -11,6 +11,21 @@ use \Mockery as M;
 
 class GenerateDatesCommandTest extends \PHPUnit_Framework_TestCase
 {
+    const TEST_OUTPUT_FILE_NAME = "genDatesOutput.test";
+
+    public function getTestOutputFileName()
+    {
+        return __DIR__ . self::TEST_OUTPUT_FILE_NAME;
+    }
+
+    public function tearDown()
+    {
+        $output = $this->getTestOutputFileName();
+        if (file_exists($output)) {
+            unlink($output);
+        }
+    }
+
     /**
      * @expectedException        \RuntimeException
      * @expectedExceptionMessage Not enough arguments.
@@ -48,13 +63,11 @@ class GenerateDatesCommandTest extends \PHPUnit_Framework_TestCase
         $command = $application->find(GenerateDatesCommand::COMMAND_NAME);
         $commandTester = new CommandTester($command);
 
-        //TODO: save test files in another dir
-        $outputFileName = __DIR__ . 'genDatesCommand.test';
+        $outputFileName = $this->getTestOutputFileName();
         $commandTester->execute(array('command' => $command->getName(), GenerateDatesCommand::OUTPUT_FILE_NAME_ARG => $outputFileName));
 
         // get the content of the file and delete it
         $contentOfOutputFile = file_get_contents($outputFileName);
-        unlink($outputFileName);
 
         $this->assertEquals('serializedData', $contentOfOutputFile);
     }

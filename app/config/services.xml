@@ -119,7 +119,7 @@
 
 	    <!-- Validators -->
 	    	<service id="xml_schema_validator" class="%xml_xchema_validator.class%" >
-	        	<argument>timestamps.xsd </argument>
+	        	<argument>timestamps.xsd</argument>
 	        </service>
     </services>
 </container>
