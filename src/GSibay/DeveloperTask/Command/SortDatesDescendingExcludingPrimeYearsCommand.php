@@ -9,7 +9,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Command\Command;
 use JMS\Serializer\SerializerInterface;
-use \DOMDocument as DOMDocument;
 
 /**
  * Command to parse a file into an array and
@@ -49,13 +48,13 @@ class SortDatesDescendingExcludingPrimeYearsCommand extends Command
      * @var Validator
      */
     private $inputValidator;
-    
+
     /**
-     * 
-     * @param ArrayOrganizerService $arrayOrganizerService
-     * @param SerializerInterface $serializer
-     * @param string $serializeFormat
-     * @param string $schemaForValidationFileName
+     *
+     * @param  ArrayOrganizerService $arrayOrganizerService
+     * @param  SerializerInterface   $serializer
+     * @param  string                $serializeFormat
+     * @param  string                $schemaForValidationFileName
      * @throws \RuntimeException
      */
     public function __construct(ArrayOrganizerService $arrayOrganizerService, SerializerInterface $serializer, $validator = null, $serializeFormat = 'xml')
@@ -69,11 +68,11 @@ class SortDatesDescendingExcludingPrimeYearsCommand extends Command
 
     private function validateInput($inputStr)
     {
-        if($this->inputValidator !== null && !$this->inputValidator->validate($inputStr)) {
-            throw new \RuntimeException("Input file is not valid."); 
+        if ($this->inputValidator !== null && !$this->inputValidator->validate($inputStr)) {
+            throw new \RuntimeException("Input file is not valid.");
         }
     }
-    
+
     /**
      * (non-PHPdoc)
      * @see Symfony\Component\Console\Command.Command::configure()
@@ -86,7 +85,7 @@ class SortDatesDescendingExcludingPrimeYearsCommand extends Command
         ->addArgument(self::INPUT_FILE_NAME_ARG, InputArgument::REQUIRED, "Name of the input file.")
         ->addArgument(self::OUTPUT_FILE_NAME_ARG, InputArgument::REQUIRED, "Name of the output file.")
         ->setHelp("The <info>sort-dates-epy</info> command parses the input file and creates an output file with
-                the dates sorted excluding years that are prime numbers. The output file will have those dates but transformed by changing the timezone to PST, 
+                the dates sorted excluding years that are prime numbers. The output file will have those dates but transformed by changing the timezone to PST,
                 setting the time to 13:00:00 PST.");
     }
 
@@ -102,8 +101,8 @@ class SortDatesDescendingExcludingPrimeYearsCommand extends Command
             throw new \RuntimeException('Could not read input file: '.$input->getArgument(self::INPUT_FILE_NAME_ARG));
         }
 
-        $this->validateInput($fileContent); 
-        
+        $this->validateInput($fileContent);
+
         $dates = $this->serializer->deserialize($fileContent, 'array', $this->serializeFormat);
 
         // sort and filter the dates

@@ -17,14 +17,14 @@ class XMLSchemaValidator implements Validator
      * @var string
      */
     private $schemaFileName;
-    
+
     /**
-     * 
+     *
      * @param string $schemaFileName
      */
     public function __construct($schemaFileName)
     {
-        if($schemaFileName === null) {
+        if ($schemaFileName === null) {
             throw \RuntimeException("A schema must be provided.");
         }
         $this->schemaFileName = $schemaFileName;
@@ -34,6 +34,7 @@ class XMLSchemaValidator implements Validator
     {
         $xml= new DOMDocument();
         $xml->loadXML($object, LIBXML_NOBLANKS);
-        return $xml->schemaValidate($this->schemaFileName);        
+
+        return $xml->schemaValidate($this->schemaFileName);
     }
 }

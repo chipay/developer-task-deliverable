@@ -10,7 +10,7 @@ class XMLSchemaValidatorTest extends \PHPUnit_Framework_TestCase
 {
 
     const SCHEMA_FILE_NAME = "/../schema.xsd";
-    
+
     public static function setUpBeforeClass()
     {
         $schemaFileName = __DIR__ . self::SCHEMA_FILE_NAME;
@@ -32,19 +32,19 @@ class XMLSchemaValidatorTest extends \PHPUnit_Framework_TestCase
 </xsd:schema>
 EOB;
 
-        file_put_contents($schemaFileName, $schemaStr) or die;         
+        file_put_contents($schemaFileName, $schemaStr) or die;
     }
-    
+
     public static function tearDownAfterClass()
     {
         unlink(__DIR__ . self::SCHEMA_FILE_NAME);
     }
-    
+
     public function test_Validate_NoTimestampChild_ReturnsTrue()
     {
         $validator = new XMLSchemaValidator(__DIR__ . self::SCHEMA_FILE_NAME);
         $validXml = "<?xml version='1.0' encoding='UTF-8'?><timestamps></timestamps>";
-        
+
         $this->assertTrue($validator->validate($validXml));
     }
 
@@ -52,16 +52,16 @@ EOB;
     {
         $validator = new XMLSchemaValidator(__DIR__ . self::SCHEMA_FILE_NAME);
         $validXml = "<?xml version='1.0' encoding='UTF-8'?><timestamps/>";
-    
+
         $this->assertTrue($validator->validate($validXml));
     }
-    
+
     public function test_Validate_OneChild_ReturnsTrue()
     {
         $validator = new XMLSchemaValidator(__DIR__ . self::SCHEMA_FILE_NAME);
         $validXml = "<?xml version='1.0' encoding='UTF-8'?>
         <timestamps><timestamp time='239983' text='24-2-1970 13:00:00' /></timestamps>";
-    
+
         $this->assertTrue($validator->validate($validXml));
     }
 
@@ -76,16 +76,16 @@ EOB;
             <timestamp time='2392334' text='24-2-1780 13:00:00' />
             <timestamp time='233232983' text='24-2-1978 13:33:12' />
         </timestamps>";
-    
+
         $this->assertTrue($validator->validate($validXml));
     }
-    
+
     public function test_Validate_NoTimestampsEnclosingTag_ReturnsFalse()
     {
         $validator = new XMLSchemaValidator(__DIR__ . self::SCHEMA_FILE_NAME);
         $validXml = "<?xml version='1.0' encoding='UTF-8'?>
         <timestamp time='239983' text='24-2-1970 13:00:00' />";
-        
+
         //ignore warnings for this test. Only check that the validation is false
         @$this->assertFalse($validator->validate($validXml));
     }
