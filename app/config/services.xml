@@ -19,6 +19,7 @@
         <parameter key="chain_transformer.class">GSibay\DeveloperTask\Transformer\ChainTransformer</parameter>
         <parameter key="date_time_to_different_time_and_timezone.class">GSibay\DeveloperTask\Transformer\DateTimeToDifferentTimeAndTimeZone</parameter>
         <parameter key="serializable_date_time_container_to_date_time_.class">GSibay\DeveloperTask\Transformer\SerializableDateTimeContainerToDateTimes</parameter>
+        <parameter key="array_transformer.class">GSibay\DeveloperTask\Transformer\ArrayTransformer</parameter>
     </parameters>
 
     <services>
@@ -68,35 +69,44 @@
 		        </service>
 
         <!-- Transformers -->
-        	<!-- TimeDate ====> SerializableTimeDate -->
+        	
+        	<!-- TimeDate[] ====> SerializableDateTime[] -->
+        	<service id="date_times_to_serializable_date_times" class="%array_transformer.class%" >
+	        	<argument type="service" id="date_time_to_serializable_date_time"/>
+	        </service>
+	        <!-- TimeDate ====> SerializableDateTime -->
 	        <service id="date_time_to_serializable_date_time" class="%date_time_to_serializable_date_time.class%" />
+	        
 
-
-	        <!-- TimeDate[] ====> SerializableTimeDateContainer -->
+	        <!-- TimeDate[] ====> SerializableDateTimeContainer -->
 	        <service id="date_times_to_serializable_date_time_container" class="%date_times_to_serializable_date_time_container.class%">
-	        	<argument type="service" id="date_time_to_serializable_date_time" />
+	        	<argument type="service" id="date_times_to_serializable_date_times" />
 	        </service>
 
-			<!-- SerializableTimeDateContainer ==> TimeDate[] -->
+			<!-- SerializableDateTimeContainer ==> TimeDate[] -->
 	        <service id="serializable_date_time_container_to_date_times" class="%serializable_date_time_container_to_date_time_.class%">
 	        </service>
 	        
-			<!-- TimeDate[] ====> TimeDate[] 1PM PST -->
-   	        <service id="date_time_to_1PM_PST_date_time" class="%date_time_to_different_time_and_timezone.class%">
+			<!-- DateTime[] ====> DateTime[] 1PM PST -->
+			<service id="date_times_to_1PM_PST_date_times" class="%array_transformer.class%">
+	        	<argument type="service" id="date_time_to_1PM_PST_date_time"/>
+	        </service>
+	        <!-- DateTime ====> DateTime 1PM PST -->
+			<service id="date_time_to_1PM_PST_date_time" class="%date_time_to_different_time_and_timezone.class%">
 	        	<argument>PST</argument>
 	        	<argument>13</argument>
 	        	<argument>0</argument>
 	        	<argument>0</argument>
 	        </service>
 
-			<!-- chain transformer: TimeDate[] ====> TimeDate[] (1pm PST) ====> SerializableTimeDateContainer (1pm PST) -->
+			<!-- chain transformer: DateTime[] ====> DateTime[] (1pm PST) ====> SerializableDateTimeContainer (1pm PST) -->
 			<service id="date_times_to_serializable_date_time_1PM_PST_container" class="%chain_transformer.class%">
 	        	<argument type="collection">
-	        		<argument id="date_time_to_1PM_PST_date_time" type="service" />
-	        		<argument id="date_time_to_serializable_date_time" type="service" />
+	        		<argument id="date_times_to_1PM_PST_date_times" type="service" />
+	        		<argument id="date_times_to_serializable_date_time_container" type="service" />
 	        	</argument>
 	        </service>
-
+			
         <!-- Predicates -->
 	        <service id="is_year_composite_number" class="%is_year_composite_number.class%" />
 

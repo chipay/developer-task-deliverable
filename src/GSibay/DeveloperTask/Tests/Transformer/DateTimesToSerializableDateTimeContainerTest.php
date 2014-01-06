@@ -13,38 +13,34 @@ class DateTimesToSerializableDateTimeContainerTest extends \PHPUnit_Framework_Te
 {
     public function test_Transform_EmptyDateTimes_ContinerHasEmptyArray()
     {
-        $dateTimeToSerializableDateTime =
-            M::mock('GSibay\DeveloperTask\Transformer\DateTimeToSerializableDateTime');
-        $transformer = new DateTimesToSerializableDateTimeContainer($dateTimeToSerializableDateTime);
+        $dateTimesToSerializableDateTimes = M::mock('GSibay\DeveloperTask\Transformer\ArrayTransformer');
+        $dateTimesToSerializableDateTimes->shouldReceive('transform')->once()->with(array())->andReturn(array())->ordered();
+        
+        $transformer = new DateTimesToSerializableDateTimeContainer($dateTimesToSerializableDateTimes);
+        
         $this->assertEquals(new SerializableDateTimeContainer(array()), $transformer->transform(array()));
     }
 
     public function test_Transform_ThreeDateTimes_ContainerHasThreeTransformedDateTimes()
     {
-        $date1 = new DateTime('20-10-1990');
-        $date1->setTimezone(new DateTimeZone('PST'));
+        $date1 = M::mock('\DateTime');
         $transformedDate1 = M::mock('\DateTime');
 
-        $date2 = new DateTime('19-07-1974');
-        $date2->setTimezone(new DateTimeZone('GMT'));
+        $date2 = M::mock('\DateTime');
         $transformedDate2 = M::mock('\DateTime');
-
-        $date3 = new DateTime('01-06-1986');
-        $date3->setTimezone(new DateTimeZone('America/Aruba'));
+        
+        $date3 = M::mock('\DateTime');
         $transformedDate3 = M::mock('\DateTime');
-
+        
         $dates = array($date1, $date2, $date3);
-        $expected = new SerializableDateTimeContainer(
-                array($transformedDate1, $transformedDate2, $transformedDate3));
-
-        $dateTimeToSerializableDateTime =
-            M::mock('GSibay\DeveloperTask\Transformer\DateTimeToSerializableDateTime');
-        $dateTimeToSerializableDateTime->shouldReceive('transform')->once()->with($date1)->andReturn($transformedDate1)->ordered();
-        $dateTimeToSerializableDateTime->shouldReceive('transform')->once()->with($date2)->andReturn($transformedDate2)->ordered();
-        $dateTimeToSerializableDateTime->shouldReceive('transform')->once()->with($date3)->andReturn($transformedDate3)->ordered();
-
-        $transformer = new DateTimesToSerializableDateTimeContainer($dateTimeToSerializableDateTime);
-
-        $this->assertEquals($expected, $transformer->transform($dates));
+        
+        $transformedDates = array($transformedDate1, $transformedDate2, $transformedDate3);
+        
+        $dateTimesToSerializableDateTimes = M::mock('GSibay\DeveloperTask\Transformer\ArrayTransformer');
+        $dateTimesToSerializableDateTimes->shouldReceive('transform')->once()->with($dates)->andReturn($transformedDates);
+        
+        $transformer = new DateTimesToSerializableDateTimeContainer($dateTimesToSerializableDateTimes);
+        
+        $this->assertEquals(new SerializableDateTimeContainer($transformedDates), $transformer->transform($dates));
     }
 }

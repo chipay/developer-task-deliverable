@@ -2,9 +2,7 @@
 
 namespace GSibay\DeveloperTask\Transformer;
 
-use GSibay\DeveloperTask\Transformer\AbstractTransformer;
-
-class DateTimeZoneTransformer extends AbstractTransformer
+class DateTimeZoneTransformer implements Transformer
 {
     /**
      * (non-PHPdoc)

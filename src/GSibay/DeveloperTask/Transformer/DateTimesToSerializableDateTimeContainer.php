@@ -12,28 +12,28 @@ use GSibay\DeveloperTask\Serializer\Serializable\SerializableDateTimeContainer;
  * @author gsibay
  *
  */
-class DateTimesToSerializableDateTimeContainer extends AbstractTransformer
+class DateTimesToSerializableDateTimeContainer implements Transformer
 {
 
     /**
-     * Transformer to transform DateTime to SerializableDateTime.
+     * Transformer to transform DateTime[] to SerializableDateTime[].
      * @var Transformer
      */
-    private $toSerializableDateTime;
+    private $toSerializableDateTimes;
 
     public function __construct(Transformer $dateTimeTransformer)
     {
-        $this->toSerializableDateTime = $dateTimeTransformer;
+        $this->toSerializableDateTimes = $dateTimeTransformer;
     }
 
     /**
      * (non-PHPdoc)
      * @see GSibay\DeveloperTask\Transformer.Transformer::transform()
      */
-    public function transform($anObject)
+    public function transform($dates)
     {
         // transform DateTime[] to SerializableDateTime[]
-        $serializableDateTimeArray = array_map(array($this->toSerializableDateTime, 'transform'), $anObject);
+        $serializableDateTimeArray = $this->toSerializableDateTimes->transform($dates);
 
         return new SerializableDateTimeContainer($serializableDateTimeArray);
     }

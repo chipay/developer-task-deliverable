@@ -10,7 +10,7 @@ use \DateTimeZone as DateTimeZone;
  * @author gsibay
  *
  */
-class DateTimeToDifferentTimeAndTimeZone extends AbstractTransformer
+class DateTimeToDifferentTimeAndTimeZone implements Transformer
 {
 
     /**

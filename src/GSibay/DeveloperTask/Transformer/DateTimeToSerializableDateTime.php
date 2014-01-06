@@ -10,7 +10,7 @@ namespace GSibay\DeveloperTask\Transformer;
  */
 use GSibay\DeveloperTask\Serializer\Serializable\SerializableDateTime;
 
-class DateTimeToSerializableDateTime extends AbstractTransformer
+class DateTimeToSerializableDateTime implements Transformer
 {
 
     /**

@@ -12,7 +12,7 @@ use GSibay\DeveloperTask\Serializer\Serializable\SerializableDateTimeContainer;
  * @author gsibay
  *
  */
-class SerializableDateTimeContainerToDateTimes extends AbstractTransformer
+class SerializableDateTimeContainerToDateTimes implements Transformer
 {
 
     /**

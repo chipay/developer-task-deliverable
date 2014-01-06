@@ -2,8 +2,6 @@
 
 namespace GSibay\DeveloperTask\Transformer;
 
-use GSibay\DeveloperTask\Transformer\AbstractTransformer;
-
 /**
  * Transformer that applies a sequence of transformations
  * specified by an array of Transformers.
@@ -11,7 +9,7 @@ use GSibay\DeveloperTask\Transformer\AbstractTransformer;
  * @author gsibay
  *
  */
-class ChainTransformer extends AbstractTransformer
+class ChainTransformer implements Transformer
 {
 
     /**
