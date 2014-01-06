@@ -43,6 +43,7 @@
 	        	<tag name="console.command" />
 	        	<argument type="service" id="filter_composite_number_years_sort_dates_in_descendent_order_service" />
 	        	<argument type="service" id="serializable_date_time_1PM_PST_container_transformer_serializer" />
+	        	<argument>timestamps.xsd</argument>
 	        </service>
 
 		<!-- Helpers  -->
