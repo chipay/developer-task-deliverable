@@ -22,6 +22,8 @@ use GSibay\DeveloperTask\Transformer\Transformer;
  * of the type that the client is expecting.
  * For this reason the $deserializedObjectType must be given during construction if
  * a post deserialization transformer was provided.
+ * Deserialization will throw a LogicException if post deserialization transformer
+ * is provided but $deserializedObjectType is not.
  *
  * @author gsibay
  *
@@ -84,7 +86,7 @@ class TransformerSerializer implements SerializerInterface
     {
         if ($this->postDeserializationTransformer !== null) {
             if ($this->deserializedObjectType === null) {
-                throw new \RuntimeException('Post deserialization transformer has been set but not the type of the deserialized object.');
+                throw new \LogicException('Post deserialization transformer has been set but not the type of the deserialized object.');
             }
 
             $deserializedData =  $this->serializer->deserialize($data, $this->deserializedObjectType, $format, $context);

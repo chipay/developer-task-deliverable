@@ -2,12 +2,6 @@
 
 namespace GSibay\DeveloperTask\Transformer;
 
-/**
- * Transforms an array of \TimeDate to a
- * GSibay\DeveloperTask\Serializer\Serializable\SerializableDateTimeContainer
- * @author gsibay
- *
- */
 use GSibay\DeveloperTask\Serializer\Serializable\SerializableDateTimeContainer;
 
 /**
