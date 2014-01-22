@@ -84,7 +84,7 @@ EOD
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        // create the dates, serialize them
+        // create the dates, then serialize them
         $generatedDates = $this->dateGeneratorService->generateDateTimesFromEpoch(new DateTime("now", new DateTimeZone('GMT')));
         $serializedDates = $this->serializer->serialize($generatedDates, $this->serializeFormat);
 
